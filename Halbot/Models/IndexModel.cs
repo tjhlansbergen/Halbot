@@ -1,7 +1,5 @@
-using Halbot.Code;
-using System.Linq;
 using System.Collections.Generic;
-using System;
+using Halbot.Code;
 
 namespace Halbot.Models
 {

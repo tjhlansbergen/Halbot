@@ -6,6 +6,7 @@
 ///  HTML generator for column charts
 /// </summary>
 /// 
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,8 @@ namespace Halbot.Code.Charts
         /// </summary>
         public class DataSet
         {
-
             // private property, a list of data with a label, value-text and a value
-            public List<Tuple<string, string, double>> Data { get; private set; } 
+            public List<Tuple<string, string, double>> Data { get; private set; }
             public string Name { get; private set; }
 
             // constructor
@@ -34,7 +34,7 @@ namespace Halbot.Code.Charts
 
             // setter for adding data
             public void Add(string label, string value_text, double value)
-            { 
+            {
                 Data.Add(new Tuple<string, string, double>(label, value_text, value));
             }
         }
@@ -82,15 +82,19 @@ namespace Halbot.Code.Charts
             {
                 for (int bar = 0; bar < BarsPerColumn; bar++)
                 {
-                    if (column < DataSets[bar].Data.Count)    //dont try to fetch non-existing data
+                    if (column < DataSets[bar].Data.Count) //dont try to fetch non-existing data
                     {
                         //calculate height ratio
-                        double height_ratio = DataSets[bar].Data.OrderByDescending(item => item.Item3).First().Item3 / 100.00;
+                        double height_ratio = DataSets[bar].Data.OrderByDescending(item => item.Item3).First().Item3 /
+                                              100.00;
 
                         // surrounding table-cell
-                        charthtml.Append(string.Format("<td style=\"vertical-align: bottom; width: {0}%;\">", barwidth));
+                        charthtml.Append(string.Format("<td style=\"vertical-align: bottom; width: {0}%;\">",
+                            barwidth));
                         // the actual bar as div
-                        charthtml.Append(string.Format("<div class=\"{0} {1}\" style=\"width: 100%; height: {2}%\"></div>", Name, DataSets[bar].Name, (int)(DataSets[bar].Data[column].Item3 / height_ratio)));
+                        charthtml.Append(string.Format(
+                            "<div class=\"{0} {1}\" style=\"width: 100%; height: {2}%\"></div>", Name,
+                            DataSets[bar].Name, (int) (DataSets[bar].Data[column].Item3 / height_ratio)));
                         charthtml.AppendLine("</td>");
                     }
                     else //empty cell
@@ -98,9 +102,11 @@ namespace Halbot.Code.Charts
                         charthtml.AppendLine("<td></td>");
                     }
                 }
+
                 //empty cell as padding between columns
                 if (column < NumberOfColumns - 1) charthtml.AppendLine("<td></td>");
             }
+
             charthtml.AppendLine("</tr>");
 
             //row for labels, based on the labels provided in the first DataSet
@@ -113,8 +119,8 @@ namespace Halbot.Code.Charts
 
                 //empty cell as padding between columns
                 if (label < NumberOfColumns - 1) charthtml.AppendLine("<td></td>");
-
             }
+
             charthtml.AppendLine("</tr>");
 
             //rows for value-text
@@ -123,9 +129,10 @@ namespace Halbot.Code.Charts
                 charthtml.AppendLine(string.Format("<tr class=\"{0} values\" style=\"height: 0;\">", Name));
                 for (int column = 0; column < NumberOfColumns; column++)
                 {
-                    if (column < DataSets[row].Data.Count)    //dont try to fetch non-existing data
+                    if (column < DataSets[row].Data.Count) //dont try to fetch non-existing data
                     {
-                        charthtml.Append(string.Format("<td colspan={0} class=\"{1} {2}\">", BarsPerColumn, Name, DataSets[row].Name));
+                        charthtml.Append(string.Format("<td colspan={0} class=\"{1} {2}\">", BarsPerColumn, Name,
+                            DataSets[row].Name));
                         charthtml.AppendFormat("{0}", DataSets[row].Data[column].Item2);
                         charthtml.AppendLine("</td>");
                     }
@@ -136,13 +143,15 @@ namespace Halbot.Code.Charts
 
                     //empty cell as padding between columns
                     if (column < NumberOfColumns - 1) charthtml.AppendLine("<td></td>");
-
                 }
+
                 charthtml.AppendLine("</tr>");
             }
 
             //wrap in table tags
-            charthtml.Insert(0, string.Format("<table class=\"{0}\" style=\"height: {1}px; width: 100%;\">{2}", Name, ChartHeight, Environment.NewLine));
+            charthtml.Insert(0,
+                string.Format("<table class=\"{0}\" style=\"height: {1}px; width: 100%;\">{2}", Name, ChartHeight,
+                    Environment.NewLine));
             charthtml.AppendLine("</table>");
 
             return charthtml.ToString();

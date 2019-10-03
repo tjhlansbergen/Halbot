@@ -1,26 +1,32 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Halbot - @ViewData["Title"]</title>
-    <link href="~/css/site.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/site.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
-    <ul>
-        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-        <li><a asp-area="" asp-controller="Home" asp-action="Progress">Progress</a></li>
-        <li><a asp-area="" asp-controller="Import" asp-action="Import">Import</a></li>
-    </ul>
-           
-    <div>
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2019 - Halbot</p>
-        </footer>
-    </div>
+<ul>
+    <li>
+        <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    </li>
+    <li>
+        <a asp-area="" asp-controller="Home" asp-action="Progress">Progress</a>
+    </li>
+    <li>
+        <a asp-area="" asp-controller="Import" asp-action="Import">Import</a>
+    </li>
+</ul>
+
+<div>
+    @RenderBody()
+    <hr/>
+    <footer>
+        <p>&copy; 2019 - Halbot</p>
+    </footer>
+</div>
 
 </body>
 </html>

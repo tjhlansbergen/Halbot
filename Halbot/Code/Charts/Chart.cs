@@ -1,6 +1,4 @@
-﻿
-
-namespace Halbot.Code.Charts
+﻿namespace Halbot.Code.Charts
 {
     public abstract class Chart
     {

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Halbot.Code;
 using Microsoft.EntityFrameworkCore;
-using Halbot.Code;
 
 namespace Halbot
 {
