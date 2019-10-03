@@ -1,0 +1,10 @@
+﻿@model Halbot.Models.ProgressModel
+
+@{
+    ViewData["Title"] = "Progress";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Progress</h2>
+
+@Html.Raw(Model.LastXActivities.CreateHTML())

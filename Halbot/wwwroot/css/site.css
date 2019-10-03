@@ -1,0 +1,28 @@
+﻿
+/* Chart colors */
+
+div.volume {
+    background-color: Black;
+}
+
+div.pace {
+    background-color: Grey;
+}
+
+div.climb {
+    background-color: Dimgray;
+}
+
+td.volume {
+    color: Black;
+}
+
+td.pace {
+    color: Grey;
+}
+
+td.climb {
+    color: Dimgray;
+}
+
+

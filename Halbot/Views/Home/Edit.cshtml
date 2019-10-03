@@ -1,0 +1,31 @@
+﻿@model Halbot.Code.HalbotActivity
+
+@{
+    ViewData["Title"] = "Edit activity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>@Model.ID</h3>
+<h3>@Model.Date</h3>
+<h3>@Model.Distance</h3>
+
+<h2>Edit:</h2>
+
+<form asp-action="Edit" asp-controller="Home">
+    <label>Classification:</label>
+    <select asp-for="Label">
+        <option value=""></option>
+        <option value="RACE">Race</option>
+        <option value="STRL">Stroll</option>
+        <option value="RECO">Recovery</option>
+        <option value="INTV">Intervals</option>
+        <option value="HILL">Hill training</option>
+        <option value="TEMP">Tempo training</option>
+        <option value="LSDI">Long slow distance</option>
+    </select>
+    <label>Description:</label>
+    <input asp-for="Description" placeholder="Add description" />
+    <input type="submit" value="Save" />
+
+</form>
+
