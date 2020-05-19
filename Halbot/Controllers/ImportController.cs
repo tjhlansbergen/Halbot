@@ -1,95 +1,109 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using Halbot.Code;
-using Halbot.Models;
+﻿using Halbot.BusinessLayer.Fetchers;
+using Halbot.Data;
+using Halbot.Data.Records;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Halbot.Controllers
 {
     public class ImportController : Controller
     {
-        private readonly HalbotDBContext _dbcontext = new HalbotDBContext();
+        private readonly DatabaseContext _dbcontext = new DatabaseContext();
+        private readonly Logger _logger = new Logger();
 
-        public IActionResult Import()
+        public IActionResult LoadClassicActivities(string classicActivities)
         {
-            return View();
-        }
-
-        [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult Import(ImportModel model)
-        {
-            //TODO null-checking
-
-            foreach (string url in model.ImportURLs.Split(';'))
+            if (string.IsNullOrEmpty(classicActivities))
             {
-                string parsed_url = string.Empty, json = string.Empty;
-
-                // tomtom message format
-                if (url.Contains("https:") && url.Contains("?format"))
-                {
-                    //parse messsage
-                    int start = url.IndexOf("https:");
-                    int end = url.IndexOf("?format", start);
-                    parsed_url = url.Substring(start, end - start);
-                }
-
-                // plain url
-                else if (url.Contains("https:"))
-                {
-                    parsed_url = url.Substring(url.IndexOf("https:"), url.Length - url.IndexOf("https:"));
-                }
-
-                // try to read the data
-                using (WebClient client = new WebClient())
-                {
-                    json = client.DownloadString(parsed_url);
-                }
-
-                // parse json to halbot activity and add to DB
-                if (!string.IsNullOrEmpty(json))
-                {
-                    HalbotActivity activity = _TomTomJsonToHalbotActivity(json);
-                    if (!_dbcontext.DBActivities.Contains(activity))
-                    {
-                        _dbcontext.DBActivities.Add(activity);
-                    }
-                }
+                _logger.Log(LogSeverityLevel.Warning, $"Added NO classic activities to database because input string was empty");
+                return RedirectToAction("Log", "Home");
             }
 
-            // persist changes in DB
-            _dbcontext.SaveChanges();
+            try
+            {
+                var records = new ClassicFetcher().CreateRecords(classicActivities);
+
+                _logger.Log(LogSeverityLevel.Info, $"Adding {records.Count} classic activities to the database");
+                ActivityImport(records);
+            }
+            catch (Exception ex)
+            {
+                _logger.Log(LogSeverityLevel.Error, $"Import exception");
+                _logger.Log(LogSeverityLevel.Error, ex.Message);
+                return RedirectToAction("Log", "Home");
+            }
 
             return RedirectToAction("Index", "Home");
         }
 
-        private static HalbotActivity _TomTomJsonToHalbotActivity(string json)
+        public IActionResult LoadTomTomActivities(string tomTomActivityUrls)
         {
-            // read json to anonymous object
-            dynamic obj = JsonConvert.DeserializeObject(json);
-            if (obj.id is null) return null;
+            if (string.IsNullOrEmpty(tomTomActivityUrls))
+            {
+                _logger.Log(LogSeverityLevel.Warning, $"Added NO TomTom activities to database because input string was empty");
+                return RedirectToAction("Log", "Home");
+            }
 
-            // create empty activity
-            HalbotActivity activity = new HalbotActivity();
+            try
+            {
+                var records = new TomTomFetcher().CreateRecords(tomTomActivityUrls);
 
-            // parse anonymous object
-            if (obj.id != null) activity.ID = (int) obj.id;
-            if (obj.aggregates.climb_total != null) activity.Climb = (int) obj.aggregates.climb_total;
-            if (obj.aggregates.descent_total != null) activity.Descent = (int) obj.aggregates.descent_total;
-            if (obj.start_datetime_user != null) activity.Date = (DateTime) obj.start_datetime_user;
-            if (obj.aggregates.distance_total != null) activity.Distance = (int) obj.aggregates.distance_total;
-            if (obj.aggregates.active_time_total != null) activity.Duration = (int) obj.aggregates.active_time_total;
-            if (obj.aggregates.heartrate_avg != null) activity.Heartrate = (int) obj.aggregates.heartrate_avg;
-            if (obj.links.image != null) activity.Image = (string) obj.links.image;
-            if (obj.bounding_box != null)
-                activity.Lat = ((float) obj.bounding_box.north_east.lat + (float) obj.bounding_box.south_west.lat) / 2;
-            if (obj.bounding_box != null)
-                activity.Lng = ((float) obj.bounding_box.north_east.lng + (float) obj.bounding_box.south_west.lng) / 2;
-            if (obj.aggregates.speed_avg != null) activity.Speed = (float) obj.aggregates.speed_avg;
-            if (obj.links.self != null) activity.Url = (string) obj.links.self;
+                _logger.Log(LogSeverityLevel.Info, $"Adding {records.Count} TomTom activities to the database");
+                ActivityImport(records);
+            }
+            catch (Exception ex)
+            {
+                _logger.Log(LogSeverityLevel.Error, $"Import exception");
+                _logger.Log(LogSeverityLevel.Error, ex.Message);
+                return RedirectToAction("Log", "Home");
+            }
 
-            return activity;
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult LoadGarminActivities(string garminActivityIds)
+        {
+            if (string.IsNullOrEmpty(garminActivityIds))
+            {
+                _logger.Log(LogSeverityLevel.Warning, $"Added NO Garmin activities to database because input string was empty");
+                return RedirectToAction("Log", "Home");
+            }
+
+            try
+            {
+                var records = new GarminFetcher().CreateRecords(garminActivityIds);
+
+                _logger.Log(LogSeverityLevel.Info, $"Adding {records.Count} Garmin activities to the database");
+                ActivityImport(records);
+            }
+            catch (Exception ex)
+            {
+                _logger.Log(LogSeverityLevel.Error, $"Import exception");
+                _logger.Log(LogSeverityLevel.Error, ex.Message);
+                return RedirectToAction("Log", "Home");
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        private void ActivityImport(List<ActivityRecord> records)
+        {
+            foreach (var incomingRecord in records)
+            {
+                // check if we already have the activity by ID
+                if (_dbcontext.ActivityRecords.Any(r => r.Id == incomingRecord.Id))
+                {
+                    _logger.Log(LogSeverityLevel.Warning, $"DUPLICATE: Activity with ID {incomingRecord.Id} already exists!");
+                }
+                else
+                {
+                    _dbcontext.ActivityRecords.Add(incomingRecord);
+                }
+            }
+
+            _dbcontext.SaveChanges();
         }
     }
 }

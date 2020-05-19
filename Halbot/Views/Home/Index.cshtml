@@ -6,40 +6,22 @@
 }
 
 
-<table>
+<table class="alternating">
 
-    <!-- table headers -->
-    <tr>
-        <th>Distance</th>
-        <th>Pace</th>
-        <th>Date</th>
-        <th>Route</th>
-        <th>Effort</th>
-    </tr>
-
-    <!-- rows -->
-    @foreach (var activity in Model.Activities)
+    @foreach (var activity in Model.Activities.OrderByDescending(a => a.Date))
     {
         <tr>
             <td>
-                <a asp-controller="Home" asp-action="Edit" asp-route-id="@activity.ID">@string.Format("{0:0.00} km", (double) activity.Distance / 1000)</a>
+                <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Distance / 1000:0.00} km")</a>
             </td>
             <td>
-                <a asp-controller="Home" asp-action="Edit" asp-route-id="@activity.ID">@string.Format("{0} m/km", activity.Pace)</a>
+                <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Pace} m/km")</a>
             </td>
             <td>
-                <a asp-controller="Home" asp-action="Edit" asp-route-id="@activity.ID">@string.Format("{0:D}", activity.Date)</a>
+                <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Date:D}")</a>
             </td>
             <td>
-                @if (!String.IsNullOrEmpty(activity.Image))
-                {
-                    <a asp-controller="Home" asp-action="Edit" asp-route-id="@activity.ID">
-                        <img src="@activity.Image" height="32" width="32"/>
-                    </a>
-                }
-            </td>
-            <td>
-                <a asp-controller="Home" asp-action="Edit" asp-route-id="@activity.ID">@string.Format("{0}", activity.Effort)</a>
+                <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Effort}")</a>
             </td>
         </tr>
     }

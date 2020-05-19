@@ -1,0 +1,56 @@
+﻿@using System.Globalization
+@model Halbot.Models.ImportModel
+
+@{
+    ViewData["Title"] = "Import";
+    Layout = "_Layout";
+}
+
+<div class="box">
+
+    <!-- Garmin activities -->
+
+    <h3>Import Garmin Activities</h3>
+    @using (Html.BeginForm("LoadGarminActivities", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <label>Paste Garmin activity <b>ID's</b> here (semicolon seperated):</label>
+        <br />
+        <input type="text" name="garminActivityIds" id="garminActivityIds" />
+        <input type="submit" name="submit" id="LoadGarminActivities" value="IMPORT" />
+
+    }
+
+</div>
+
+<div class="box">
+
+    <!-- TomTom activities -->
+
+    <h3>Import TomTom Activities</h3>
+    @using (Html.BeginForm("LoadTomTomActivities", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <label>Paste TomTom activity <b>URL's</b> here (semicolon seperated):</label>
+        <br />
+        <input type="text" name="tomTomActivityUrls" id="tomTomActivityUrls" />
+        <input type="submit" name="submit" id="LoadTomTomActivities" value="IMPORT" />
+
+    }
+
+</div>
+
+<div class="box">
+
+    <!-- classic activities (temporarily) -->
+
+    <h3>Import Classic Activities</h3>
+
+    @using (Html.BeginForm("LoadClassicActivities", "Import", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <label>Paste classic activity <b>JSON</b> here (semicolon seperated):</label>
+        <br />
+        <input type="text" name="classicActivities" id="classicActivities" />
+        <input type="submit" name="submit" id="LoadClassicActivities" value="IMPORT" />
+
+    }
+
+</div>

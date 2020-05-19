@@ -1,44 +1,60 @@
-﻿using System.Linq;
-using Halbot.Code;
+﻿using Halbot.BusinessLayer.Fetchers;
+using Halbot.Data;
+using Halbot.Data.Records;
 using Halbot.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Halbot.BusinessLayer.Translators;
+
+//using JsonException = System.Text.Json.JsonException;
+
 
 namespace Halbot.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly HalbotDBContext _dbcontext = new HalbotDBContext();
+        private readonly DatabaseContext _dbcontext = new DatabaseContext();
 
         public IActionResult Index()
         {
-            return View("Index", new IndexModel(_dbcontext.DBActivities.ToList()));
+            return View("Index", new IndexModel(ActivityCache.Get(_dbcontext)));
         }
 
-        public IActionResult Progress()
+        public IActionResult Charts()
         {
-            return View("Progress", new ProgressModel(_dbcontext.DBActivities.ToList()));
+            return View("Charts", new ChartsModel(ActivityCache.Get(_dbcontext)));
         }
 
-        public IActionResult Edit(int id)
+        public IActionResult Stats()
         {
-            return View("Edit", _dbcontext.DBActivities.Where(a => a.ID == id).FirstOrDefault());
+            return View("Stats", new StatsModel(ActivityCache.Get(_dbcontext)));
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult Edit(HalbotActivity activity)
+        public IActionResult Races()
         {
-            // update DB context
-            //_dbcontext.DBActivities.Update(activity);
+            return View("Races", new RacesModel(ActivityCache.Get(_dbcontext).Where(a => a.IsRace).ToList()));
+        }
 
-            _dbcontext.DBActivities.Attach(activity);
-            _dbcontext.Entry(activity).Property(p => p.Label).IsModified = true;
-            _dbcontext.Entry(activity).Property(p => p.Description).IsModified = true;
+        public IActionResult Map()
+        {
+            return View("Map", new MapModel(ActivityCache.Get(_dbcontext)));
+        }
 
-            // persist changes in DB
-            _dbcontext.SaveChanges();
+        public IActionResult Import()
+        {
+            return View("Import", new ImportModel());
+        }
 
-            // return same item
-            return RedirectToAction("Edit", activity.ID);
+        public IActionResult Run(long id)
+        {
+            return View("Run", ActivityCache.Get(_dbcontext).Single(a => a.Id == id));
+        }
+
+        public IActionResult Log()
+        {
+            return View("Log", new LogModel(_dbcontext.LogRecords.OrderByDescending(l => l.DateTime).Take(40).ToList()));
         }
     }
 }

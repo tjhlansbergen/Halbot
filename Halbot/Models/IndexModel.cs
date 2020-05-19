@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Halbot.Code;
 
 namespace Halbot.Models
 {
@@ -9,10 +8,10 @@ namespace Halbot.Models
         public List<HalbotActivity> Activities { get; private set; }
 
         //constructor
-        public IndexModel(List<HalbotActivity> dbactivities)
+        public IndexModel(List<HalbotActivity> activities)
         {
             //initialize
-            Activities = dbactivities;
+            Activities = activities;
         }
     }
 }

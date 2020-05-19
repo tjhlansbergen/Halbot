@@ -1,0 +1,43 @@
+﻿@model Halbot.Models.RacesModel
+
+@{
+    ViewData["Title"] = "Races";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@foreach (var race in Model.Races)
+{
+    <div class="box">
+        <table>
+            <tr><th>@race.Date.ToLongDateString()</th></tr>
+            <tr>
+                <td>
+                    @if (string.IsNullOrWhiteSpace(race.Description))
+                    {
+                        <a asp-area="" asp-controller="Activity" asp-action="EditDescription" asp-route-id="@race.Id">...</a>
+                    }
+                    else
+                    {
+                        <a asp-area="" asp-controller="Activity" asp-action="EditDescription" asp-route-id="@race.Id">@race.Description</a>
+                    }
+                </td>
+            </tr>
+
+            <tr><td>&nbsp;</td></tr>
+
+            <tr>
+                <td>Distance:</td>
+                <td class="right">@($"{race.Distance / 1000:0.00} km")</td>
+            </tr>
+            <tr>
+                <td>Duration:</td>
+                <td class="right">@((race.Duration == 0 ? "-" : TimeSpan.FromSeconds(race.Duration).ToString(@"hh\:mm\:ss")))</td>
+            </tr>
+            <tr>
+                <td>Pace:</td>
+                <td class="right">@($"{race.Pace} m/km")</td>
+            </tr>
+        </table>
+    </div>
+}
+

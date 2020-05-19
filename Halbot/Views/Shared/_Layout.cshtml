@@ -1,32 +1,30 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8" />
     <title>Halbot - @ViewData["Title"]</title>
-    <link href="~/css/site.css" rel="stylesheet" type="text/css"/>
+    <link href="~/css/site.css" rel="stylesheet" type="text/css" />
+    @RenderSection("styles", false)
 </head>
 <body>
 
-<ul>
-    <li>
-        <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-    </li>
-    <li>
-        <a asp-area="" asp-controller="Home" asp-action="Progress">Progress</a>
-    </li>
-    <li>
-        <a asp-area="" asp-controller="Import" asp-action="Import">Import</a>
-    </li>
-</ul>
-
-<div>
-    @RenderBody()
-    <hr/>
-    <footer>
-        <p>&copy; 2019 - Halbot</p>
-    </footer>
+<div class="nav">
+    <div class="menubutton" id="runs"><a asp-area="" asp-controller="Home" asp-action="Index">runs</a></div>
+    <div class="menubutton" id="charts"><a asp-area="" asp-controller="Home" asp-action="Charts">charts</a></div>
+    <div class="menubutton" id="stats"><a asp-area="" asp-controller="Home" asp-action="Stats">stats</a></div>
+    <div class="menubutton" id="races"><a asp-area="" asp-controller="Home" asp-action="Races">races</a></div>
+    <div class="menubutton" id="map"><a asp-area="" asp-controller="Home" asp-action="Map">map</a></div>
+    <div class="menubutton" id="import"><a asp-area="" asp-controller="Home" asp-action="Import">import</a></div>
 </div>
+
+    <div>
+        @RenderBody()
+
+
+        <footer>
+            <p>&copy; @DateTime.UtcNow.Year Halbot v2.0 - <a asp-area="" asp-controller="Home" asp-action="Log">View log</a></p>
+        </footer>
+    </div>
 
 </body>
 </html>

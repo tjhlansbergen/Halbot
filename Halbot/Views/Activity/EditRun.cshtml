@@ -1,0 +1,21 @@
+﻿@using System.Globalization
+@model Halbot.Models.HalbotActivity
+
+@{
+    ViewData["Title"] = "Edit Run";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<partial name="_RunDetails" for="@Model" />
+
+<div class="box">
+    @using (Html.BeginForm("SaveDescription", "Activity", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <label>Description:</label>
+        <br />
+        <input type="text" name="description" id="description" />
+        <input type="hidden" name="id" id="id" value="@Model.Id" />
+        <input type="submit" name="submit" id="SaveDescription" value="SAVE DESCRIPTION" />
+
+    }
+</div>

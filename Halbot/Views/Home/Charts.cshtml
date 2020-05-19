@@ -1,0 +1,11 @@
+﻿@model Halbot.Models.ChartsModel
+
+@{
+    ViewData["Title"] = "Charts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+@Html.Raw(Model.LastXActivities.CreateHTML())
+<br />
+@Html.Raw(Model.LastXClimbPace.CreateHTML())

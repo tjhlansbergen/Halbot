@@ -1,0 +1,24 @@
+﻿@using System.Globalization
+@model Halbot.Models.HalbotActivity
+
+@{
+    ViewData["Title"] = "Run";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<partial name="_RunDetails" for="@Model" />
+
+<div class="box">
+
+    <a asp-area="" asp-controller="Activity" asp-action="EditDescription" asp-route-id="@Model.Id"><button>EDIT DESCRIPTION</button></a>
+    @if (Model.IsRace)
+    {
+        <a asp-area="" asp-controller="Activity" asp-action="ToggleRace" asp-route-id="@Model.Id"><button id="delete">REMOVE FROM RACES</button></a>
+    }
+    else
+    {
+        <a asp-area="" asp-controller="Activity" asp-action="ToggleRace" asp-route-id="@Model.Id"><button>ADD TO RACES</button></a>
+    }
+    <a asp-area="" asp-controller="Activity" asp-action="Delete" asp-route-id="@Model.Id"><button id="delete">DELETE</button></a>
+
+</div>

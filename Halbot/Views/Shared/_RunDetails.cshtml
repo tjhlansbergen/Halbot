@@ -1,0 +1,89 @@
+﻿@using System.Globalization
+@model Halbot.Models.HalbotActivity
+
+<div class="box">
+
+    <table>
+        <tr><th>@Model.Date.ToLongDateString()</th></tr>
+        <tr>
+            <td>
+                @if (string.IsNullOrWhiteSpace(Model.Description))
+                {
+                    <a asp-area="" asp-controller="Activity" asp-action="EditDescription" asp-route-id="@Model.Id">...</a>
+                }
+                else
+                {
+                    <a asp-area="" asp-controller="Activity" asp-action="EditDescription" asp-route-id="@Model.Id">@Model.Description</a>
+                }
+            </td>
+        </tr>
+
+        <tr><td>&nbsp;</td></tr>
+
+        <tr>
+            <td>Data type:</td>
+            <td class="right">@Model.DataType</td>
+        </tr>
+        <tr>
+            <td>Id:</td>
+            <td class="right">@Model.Id</td>
+        </tr>
+        <tr>
+            <td>Race:</td>
+            <td class="right">@(Model.IsRace ? "Yes" : "No")</td>
+        </tr>
+
+        <tr><td>&nbsp;</td></tr>
+
+        <tr>
+            <td>Distance:</td>
+            <td class="right">@($"{Model.Distance / 1000:0.00} km")</td>
+        </tr>
+        <tr>
+            <td>Duration:</td>
+            <td class="right">@((Model.Duration == 0 ? "-" : TimeSpan.FromSeconds(Model.Duration).ToString(@"hh\:mm\:ss")))</td>
+        </tr>
+        <tr>
+            <td>Pace:</td>
+            <td class="right">@($"{Model.Pace} m/km")</td>
+        </tr>
+
+        <tr><td>&nbsp;</td></tr>
+
+        <tr>
+            <td>Average heartrate:</td>
+            <td class="right">@(Model.Heartrate == 0 ? "-" : Math.Round(Model.Heartrate).ToString(CultureInfo.InvariantCulture))</td>
+        </tr>
+        <tr>
+            <td>Average cadance:</td>
+            <td class="right">@(Model.Cadence == 0 ? "-" : Math.Round(Model.Cadence).ToString(CultureInfo.InvariantCulture))</td>
+        </tr>
+
+        <tr><td>&nbsp;</td></tr>
+
+        <tr>
+            <td>Effort:</td>
+            <td class="right">@Model.Effort</td>
+        </tr>
+        <tr>
+            <td>Aerobic training effect:</td>
+            <td class="right">@(Model.TrainingEffect == 0 ? "-" : Math.Round(Model.TrainingEffect, 5).ToString(CultureInfo.InvariantCulture))</td>
+        </tr>
+        <tr>
+            <td>Anaerobic training effect:</td>
+            <td class="right">@(Model.AnaerobicTrainingEffect == 0 ? "-" : Math.Round(Model.AnaerobicTrainingEffect, 5).ToString(CultureInfo.InvariantCulture))</td>
+        </tr>
+
+        <tr><td>&nbsp;</td></tr>
+
+        <tr>
+            <td>Elevation gain:</td>
+            <td class="right">@(Model.Climb == 0 ? "-" : Model.Climb.ToString(CultureInfo.InvariantCulture))</td>
+        </tr>
+        <tr>
+            <td>Elevation loss:</td>
+            <td class="right">@(Model.Descent == 0 ? "-" : Model.Descent.ToString(CultureInfo.InvariantCulture))</td>
+        </tr>
+    </table>
+
+</div>

@@ -1,0 +1,34 @@
+﻿@using System.Globalization
+
+@{
+    ViewData["Title"] = "Log";
+    Layout = "_Layout";
+}
+
+<div>
+    <table class="log">
+
+        <!-- rows -->
+        @foreach (var line in Model.LogLines)
+        {
+            <tr>
+                <td>
+                    @line.DateTime.ToString("yyyy/dd/MM")
+                </td>
+                <td>
+                    @line.DateTime.ToString("HH:mm:ss")
+                </td>
+                <td>
+                    @line.Severity
+                </td>
+                <td>
+                    @line.Message.ToString().Substring(0, line.Message.ToString().Length > 70 ? 70 : line.Message.ToString().Length)
+                </td>
+                <td>
+                    @((int)line.Severity)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
