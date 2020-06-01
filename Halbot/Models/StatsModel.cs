@@ -126,7 +126,8 @@ namespace Halbot.Models
             Month.Add(new Tuple<String, String, String>("Total distance:",
                 $"{Math.Round(last_month_selection.Sum(c => c.Distance) / 1000, 2)}km",
                 $"{Math.Round(this_month_selection.Sum(c => c.Distance) / 1000, 2)}km"));
-            Month.Add(new Tuple<String, String, String>("Total climb:", $"{last_month_selection.Sum(c => c.Climb)}m",
+            Month.Add(new Tuple<String, String, String>("Total climb:", 
+                $"{Math.Round(last_month_selection.Sum(c => c.Climb))}m",
                 $"{Math.Round(this_month_selection.Sum(c => c.Climb))}m"));
             Month.Add(new Tuple<String, String, String>("Average effort:", _averageEffort(last_month_selection), _averageEffort(this_month_selection)));
             Month.Add(new Tuple<String, String, String>("Average pace:", _averagePace(last_month_selection), _averagePace(this_month_selection)));

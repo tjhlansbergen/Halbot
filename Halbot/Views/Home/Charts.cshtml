@@ -6,6 +6,36 @@
 }
 
 <br />
-@Html.Raw(Model.LastXActivities.CreateHTML())
+
+<p><b>Last activities</b> Distance:</p>
+@Html.Raw(Model.LastXVolume.CreateHTML())
 <br />
-@Html.Raw(Model.LastXClimbPace.CreateHTML())
+<p><b>Last activities</b> Pace:</p>
+@Html.Raw(Model.LastXPace.CreateHTML())
+<br />
+<p><b>Last activities</b> Climb:</p>
+@Html.Raw(Model.LastXClimb.CreateHTML())
+
+<br />
+<br />
+
+<p><b>Last weeks</b> Total distance:</p>
+@Html.Raw(Model.LastWeekVolume.CreateHTML())
+<br />
+<p><b>Last weeks</b> Average pace:</p>
+@Html.Raw(Model.LastWeekPace.CreateHTML())
+<br />
+<p><b>Last weeks</b> Total climb:</p>
+@Html.Raw(Model.LastWeekClimb.CreateHTML())
+
+<br />
+<br />
+
+<p><b>Last months</b> Total distance:</p>
+@Html.Raw(Model.LastMonthVolume.CreateHTML())
+<br />
+<p><b>Last months</b> Average pace:</p>
+@Html.Raw(Model.LastMonthPace.CreateHTML())
+<br />
+<p><b>Last months</b> Total climb:</p>
+@Html.Raw(Model.LastMonthClimb.CreateHTML())

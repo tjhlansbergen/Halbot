@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@foreach (var race in Model.Races)
+@foreach (var race in Model.Races.OrderByDescending(a => a.Date))
 {
     <div class="box">
         <table>

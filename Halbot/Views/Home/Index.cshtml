@@ -8,7 +8,7 @@
 
 <table class="alternating">
 
-    @foreach (var activity in Model.Activities.OrderByDescending(a => a.Date))
+    @foreach (var activity in Model.Activities.OrderByDescending(a => a.Date).ToList())
     {
         <tr>
             <td>

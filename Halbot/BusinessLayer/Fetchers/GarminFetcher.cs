@@ -15,7 +15,7 @@ namespace Halbot.BusinessLayer.Fetchers
         {
             var result = new List<ActivityRecord>();
 
-            foreach (var activityId in activityIds.Split(';').Distinct())
+            foreach (var activityId in ExtractGarminActivityId(activityIds))
             {
                 if (string.IsNullOrWhiteSpace(activityId)) continue;
 
@@ -33,6 +33,27 @@ namespace Halbot.BusinessLayer.Fetchers
             }
 
             return result;
+        }
+
+        private static IEnumerable<string> ExtractGarminActivityId(string input)
+        {
+            var result = new List<string>();
+
+            if (string.IsNullOrEmpty(input)) return result;
+
+            List<string> candidates = new List<string> { };
+
+            candidates.AddRange(input.Split('/'));
+            candidates.AddRange(input.Split('\\'));
+            candidates.AddRange(input.Split(';'));
+            candidates.AddRange(input.Split(','));
+
+            foreach (var candidate in candidates)
+            {
+                if (candidate.All(char.IsDigit) && candidate.Length > 8 && candidate.Length < 12) result.Add(candidate);
+            }
+
+            return result.Distinct();
         }
     }
 }

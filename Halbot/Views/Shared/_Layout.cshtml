@@ -5,6 +5,10 @@
     <title>Halbot - @ViewData["Title"]</title>
     <link href="~/css/site.css" rel="stylesheet" type="text/css" />
     @RenderSection("styles", false)
+    <link rel="apple-touch-icon" href="~/icons/apple-touch-icon-iphone-60x60.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="~/icons/apple-touch-icon-ipad-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/icons/apple-touch-icon-iphone-retina-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="~/icons/apple-touch-icon-iphone-retina-120x120.png">
 </head>
 <body>
 
@@ -22,7 +26,7 @@
 
 
         <footer>
-            <p>&copy; @DateTime.UtcNow.Year Halbot v2.0 - <a asp-area="" asp-controller="Home" asp-action="Log">View log</a></p>
+            <p>&copy; @DateTime.UtcNow.Year Halbot v2.01 - <a asp-area="" asp-controller="Home" asp-action="Log">View log</a></p>
         </footer>
     </div>
 

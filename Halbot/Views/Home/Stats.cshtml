@@ -10,14 +10,17 @@
 <div class="box">
     <table>
         <tr>
-            <th class="left">&nbsp;</th>
+            <th>&nbsp;</th>
             <th class="right">Last week:</th>
             <th class="right">This week:</th>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
         </tr>
         @foreach (var item in Model.Week)
         {
             <tr>
-                <td class="left">@item.Item1</td>
+                <td>@item.Item1</td>
                 <td class="right">@item.Item2</td>
                 <td class="right">@item.Item3</td>
             </tr>
@@ -30,14 +33,17 @@
     <!-- month -->
     <table>
         <tr>
-            <th class="left">&nbsp;</th>
+            <th>&nbsp;</th>
             <th class="right">Last month:</th>
             <th class="right">This month:</th>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
         </tr>
         @foreach (var item in Model.Month)
         {
             <tr>
-                <td class="left">@item.Item1</td>
+                <td>@item.Item1</td>
                 <td class="right">@item.Item2</td>
                 <td class="right">@item.Item3</td>
             </tr>
@@ -51,14 +57,17 @@
     <!-- year -->
     <table>
         <tr>
-            <th class="left">&nbsp;</th>
+            <th>&nbsp;</th>
             <th class="right">Last year:</th>
             <th class="right">This year:</th>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
         </tr>
         @foreach (var item in Model.Year)
         {
             <tr>
-                <td class="left">@item.Item1</td>
+                <td>@item.Item1</td>
                 <td class="right">@item.Item2</td>
                 <td class="right">@item.Item3</td>
             </tr>
@@ -70,13 +79,16 @@
 
     <table>
         <tr>
-            <th class="left">&nbsp;</th>
+            <th>&nbsp;</th>
             <th class="right">Lifetime:</th>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
         </tr>
         @foreach (var item in Model.Alltime)
         {
             <tr>
-                <td class="left">@item.Item1</td>
+                <td>@item.Item1</td>
                 <td class="right">@item.Item2</td>
             </tr>
         }
@@ -91,14 +103,17 @@
         <tr>
             <th>Top 5 best effort:</th>
         </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
         @foreach (var item in Model.BestEffort)
         {
             <tr>
-                <td class="left">@(Model.BestEffort.IndexOf(item) + 1)<text>.</text></td>
-                <td class="left">@Html.ActionLink(@item.Effort.ToString(), "Run", new { id = item.Id })</td>
-                <td class="Left">@Html.ActionLink("on " + item.Date.ToString("dddd, MMMM dd yyyy"), "Run", new { id = item.Id })</td>
+                <td>@(Model.BestEffort.IndexOf(item) + 1)<text>.</text></td>
+                <td>@Html.ActionLink(@item.Effort.ToString(), "Run", new { id = item.Id })</td>
+                <td>@Html.ActionLink("on " + item.Date.ToString("dddd, MMMM dd yyyy"), "Run", new { id = item.Id })</td>
                 <td class="right" width="100px">
-                    <div style="display: inline-block; width: @Math.Round((100 / (double) (Model.BestEffort.First().Effort / (double) item.Effort)))%; height: 100%; background-color: Red">&nbsp;</div>
+                    <div style="display: inline-block; width: @Math.Round((100 / (double) (Model.BestEffort.First().Effort / (double) item.Effort)))%; height: 100%; background-color: chocolate">&nbsp;</div>
                 </td>
             </tr>
         }
@@ -111,12 +126,15 @@
         <tr>
             <th>Top 5 longest distance:</th>
         </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
         @foreach (var item in Model.LongestRuns)
         {
             <tr>
-                <td class="left">@(Model.LongestRuns.IndexOf(item) + 1)<text>.</text></td>
-                <td class="left">@Html.ActionLink((item.Distance / 1000).ToString("F2") + " km", "Run", new { id = item.Id })</td>
-                <td class="Left">@Html.ActionLink("on " + item.Date.ToString("dddd, MMMM dd yyyy"), "Run", new { id = item.Id })</td>
+                <td>@(Model.LongestRuns.IndexOf(item) + 1)<text>.</text></td>
+                <td>@Html.ActionLink((item.Distance / 1000).ToString("F2") + " km", "Run", new { id = item.Id })</td>
+                <td>@Html.ActionLink("on " + item.Date.ToString("dddd, MMMM dd yyyy"), "Run", new { id = item.Id })</td>
                 <td class="right" width="100px">
                     <div style="display: inline-block; width: @Math.Round((100 / ((double) Model.LongestRuns.First().Distance / (double) item.Distance)))%; height: 100%; background-color: goldenrod">&nbsp;</div>
                 </td>
@@ -131,12 +149,15 @@
         <tr>
             <th>Top 5 fastest pace:</th>
         </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
         @foreach (var item in Model.FastestRuns)
         {
             <tr>
-                <td class="left">@(Model.FastestRuns.IndexOf(item) + 1)<text>.</text></td>
-                <td class="left">@Html.ActionLink(item.Pace + " m/km", "Run", new { id = item.Id })</td>
-                <td class="Left">@Html.ActionLink("on " + item.Date.ToString("dddd MMMM dd yyyy"), "Run", new { id = item.Id })</td>
+                <td>@(Model.FastestRuns.IndexOf(item) + 1)<text>.</text></td>
+                <td>@Html.ActionLink(item.Pace + " m/km", "Run", new { id = item.Id })</td>
+                <td>@Html.ActionLink("on " + item.Date.ToString("dddd MMMM dd yyyy"), "Run", new { id = item.Id })</td>
                 <td class="right" width="100px">
                     <div style="display: inline-block; width: @Math.Round((100 / ((double) Model.FastestRuns.First().Speed / (double) item.Speed)))%; height: 100%; background-color: cadetblue">&nbsp;</div>
                 </td>
@@ -151,14 +172,17 @@
         <tr>
             <th>Top 5 highest climb:</th>
         </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
         @foreach (var item in Model.HighestRuns)
         {
             <tr>
-                <td class="left">@(Model.HighestRuns.IndexOf(item) + 1)<text>.</text></td>
-                <td class="left">@Html.ActionLink(Math.Round(item.Climb) + " meter", "Run", new { id = item.Id })</td>
-                <td class="Left">@Html.ActionLink("on " + @item.Date.ToString("dddd, MMMM dd yyyy"), "Run", new { id = item.Id })</td>
+                <td>@(Model.HighestRuns.IndexOf(item) + 1)<text>.</text></td>
+                <td>@Html.ActionLink(Math.Round(item.Climb) + " meter", "Run", new { id = item.Id })</td>
+                <td>@Html.ActionLink("on " + @item.Date.ToString("dddd, MMMM dd yyyy"), "Run", new { id = item.Id })</td>
                 <td class="right" width="100px">
-                    <div style="display: inline-block; width: @Math.Round((100 / ((double) Model.HighestRuns.First().Climb / (double) item.Climb)))%; height: 100%; background-color: LimeGreen">&nbsp;</div>
+                    <div style="display: inline-block; width: @Math.Round((100 / ((double) Model.HighestRuns.First().Climb / (double) item.Climb)))%; height: 100%; background-color: darkseagreen">&nbsp;</div>
                 </td>
             </tr>
         }
@@ -171,10 +195,13 @@
         <tr>
             <th>Top 5 best week (by volume):</th>
         </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
         @foreach (var item in Model.BestWeeks)
         {
             <tr>
-                <td class="left">@item.Key</td>
+                <td>@item.Key</td>
                 <td class="right">@item.Value.ToString("F2") km</td>
             </tr>
         }
@@ -187,10 +214,13 @@
         <tr>
             <th>Top 5 best months (by volume):</th>
         </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
         @foreach (var item in Model.BestMonths)
         {
             <tr>
-                <td class="left">@item.Key</td>
+                <td>@item.Key</td>
                 <td class="right">@item.Value.ToString("F2") km</td>
             </tr>
         }
@@ -203,12 +233,38 @@
         <tr>
             <th>Top 5 best years (by volume):</th>
         </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
         @foreach (var item in Model.BestYears)
         {
             <tr>
-                <td class="left">@item.Key</td>
+                <td>@item.Key</td>
                 <td class="right">@item.Value.ToString("F2") km</td>
             </tr>
         }
     </table>
+</div>
+<div class="box">
+    <table>
+        <tr>
+            <th>Activities by type:</th>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>Classic</td>
+            <td class="right">@Model.Activities.Count(a => a.DataType == ActivityDataType.Classic)</td>
+        </tr>
+        <tr>
+            <td>TomTom</td>
+            <td class="right">@Model.Activities.Count(a => a.DataType == ActivityDataType.TomTom)</td>
+        </tr>
+        <tr>
+            <td>Garmin</td>
+            <td class="right">@Model.Activities.Count(a => a.DataType == ActivityDataType.Garmin)</td>
+        </tr>
+    </table>
+
 </div>
