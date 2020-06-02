@@ -10,20 +10,23 @@
 
     @foreach (var activity in Model.Activities.OrderByDescending(a => a.Date).ToList())
     {
-        <tr>
-            <td>
-                <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Distance / 1000:0.00} km")</a>
-            </td>
-            <td>
-                <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Pace} m/km")</a>
-            </td>
-            <td>
-                <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Date:D}")</a>
-            </td>
-            <td>
-                <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Effort}")</a>
-            </td>
-        </tr>
+    <tr>
+        <td>
+            <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Distance / 1000:0.00} km")</a>
+        </td>
+        <td>
+            <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Pace} m/km")</a>
+        </td>
+        <td>
+            <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Date:D}")</a>
+        </td>
+        <td>
+            <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Effort}")</a>
+        </td>
+        
+        <td class=@Model.DistanceCategory(activity)>&nbsp;</td>
+        
+    </tr>
     }
 
 </table>

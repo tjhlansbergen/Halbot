@@ -163,6 +163,24 @@ button {
 }
 
 
+/* distance colors */
+
+td.xshort {
+    background-color: #6cccd7;
+}
+td.short {
+    background-color: #57b776;
+}
+td.medium {
+    background-color: #feeb51;
+}
+td.long {
+    background-color: #ffb92a;
+}
+td.xlong {
+    background-color: #ed5314;
+}
+
 
 /* Chart stuff */
 .lastvolume,
