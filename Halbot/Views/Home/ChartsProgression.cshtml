@@ -1,11 +1,11 @@
-﻿@model Halbot.Models.ChartsModel
+﻿@model Halbot.Models.ChartsProgressionModel
 
 @{
     ViewData["Title"] = "Charts";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "_Layout";
 }
 
-<br />
+<partial name="_ChartsMenu", model="new ChartsMenuModel { CurrentChart = ChartsMenuModel.ChartType.Progression }"/>
 
 <p><b>Last activities</b> Distance:</p>
 @Html.Raw(Model.LastXVolume.CreateHTML())

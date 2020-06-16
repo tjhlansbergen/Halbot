@@ -24,7 +24,7 @@ namespace Halbot.Controllers
 
         public IActionResult Charts()
         {
-            return View("Charts", new ChartsModel(ActivityCache.Get(_dbcontext)));
+            return View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext)));
         }
 
         public IActionResult Stats()
@@ -55,6 +55,26 @@ namespace Halbot.Controllers
         public IActionResult Log()
         {
             return View("Log", new LogModel(_dbcontext.LogRecords.OrderByDescending(l => l.DateTime).Take(40).ToList()));
+        }
+
+        public IActionResult NextChart(ChartsMenuModel.ChartType chart)
+        {
+            return chart switch
+            {
+                ChartsMenuModel.ChartType.Progression => View("ChartsWorkload", new ChartsWorkloadModel(ActivityCache.Get(_dbcontext))),
+                ChartsMenuModel.ChartType.Workload => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext))),
+                _ => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext))),
+            };
+        }
+
+        public IActionResult PreviousChart(ChartsMenuModel.ChartType chart)
+        {
+            return chart switch
+            {
+                ChartsMenuModel.ChartType.Progression => View("ChartsWorkload", new ChartsWorkloadModel(ActivityCache.Get(_dbcontext))),
+                ChartsMenuModel.ChartType.Workload => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext))),
+                _ => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext))),
+            };
         }
     }
 }

@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using Halbot.Code.Charts;
 
 namespace Halbot.Models
 {
-    public class ChartsModel
+    public class ChartsProgressionModel
     {
         //properties
-        public List<HalbotActivity> Activities { get;}
-        public ColumnChart LastXVolume { get;}
-        public ColumnChart LastXPace { get;}
+        public List<HalbotActivity> Activities { get; }
+        public ColumnChart LastXVolume { get; }
+        public ColumnChart LastXPace { get; }
         public ColumnChart LastXClimb { get; }
 
         public ColumnChart LastWeekVolume { get; }
@@ -23,7 +24,7 @@ namespace Halbot.Models
         public ColumnChart LastMonthClimb { get; }
 
         //constructor
-        public ChartsModel(List<HalbotActivity> activities)
+        public ChartsProgressionModel(List<HalbotActivity> activities)
         {
             //initialize data
             Activities = activities;
