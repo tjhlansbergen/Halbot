@@ -62,7 +62,8 @@ namespace Halbot.Controllers
             return chart switch
             {
                 ChartsMenuModel.ChartType.Progression => View("ChartsWorkload", new ChartsWorkloadModel(ActivityCache.Get(_dbcontext))),
-                ChartsMenuModel.ChartType.Workload => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext))),
+                ChartsMenuModel.ChartType.Workload => View("ChartsVolume", new ChartsVolumeModel(ActivityCache.Get(_dbcontext))),
+                ChartsMenuModel.ChartType.Volume => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext))),
                 _ => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext))),
             };
         }
@@ -71,7 +72,8 @@ namespace Halbot.Controllers
         {
             return chart switch
             {
-                ChartsMenuModel.ChartType.Progression => View("ChartsWorkload", new ChartsWorkloadModel(ActivityCache.Get(_dbcontext))),
+                ChartsMenuModel.ChartType.Progression => View("ChartsVolume", new ChartsVolumeModel(ActivityCache.Get(_dbcontext))),
+                ChartsMenuModel.ChartType.Volume => View("ChartsWorkload", new ChartsWorkloadModel(ActivityCache.Get(_dbcontext))),
                 ChartsMenuModel.ChartType.Workload => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext))),
                 _ => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext))),
             };

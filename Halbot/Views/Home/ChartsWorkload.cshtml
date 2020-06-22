@@ -1,13 +1,13 @@
 ﻿@model Halbot.Models.ChartsWorkloadModel
 
 @{
-    ViewData["Title"] = "ChartsWorkload";
+    ViewData["Title"] = "Workload";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<br />
-
 <partial name="_ChartsMenu" , model="new ChartsMenuModel { CurrentChart = ChartsMenuModel.ChartType.Workload }" />
+
+<br />
 
 <p><b>Workload per week:</b></p>
 @Html.Raw(Model.CircleChart.CreateHTML())
@@ -24,5 +24,5 @@
 &nbsp;<span style="height: 20px; width: 20px; background-color: gold; border-radius: 50%; display: inline-block;"></span> = Runs this week <br />
 &nbsp;<span style="height: 20px; width: 20px; background-color: #0099cc; border-radius: 50%; display: inline-block;"></span> = Runs last week <br />
 &nbsp;<span style="height: 20px; width: 20px; background-color: #cccccc; border-radius: 50%; display: inline-block;"></span> = Runs this year <br />
-
+<br />
 
