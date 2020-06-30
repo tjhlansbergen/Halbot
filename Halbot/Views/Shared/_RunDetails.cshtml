@@ -84,6 +84,22 @@
             <td>Elevation loss:</td>
             <td class="right">@(Model.Descent == 0 ? "-" : Model.Descent.ToString(CultureInfo.InvariantCulture))</td>
         </tr>
+
+        <tr><td>&nbsp;</td></tr>
+        
+        <tr>
+            <td>
+                @if (Model.DataType == ActivityDataType.TomTom)
+                {
+                    <a href="@Model.Url"><u>View on TomTom Sports</u></a>
+                }
+                else if (Model.DataType == ActivityDataType.Garmin)
+                {
+                    <a href="@Model.Url"><u>View on Garmin Connect</u></a>
+                }
+            </td>
+            <td>&nbsp;</td>
+        </tr>
     </table>
 
 </div>

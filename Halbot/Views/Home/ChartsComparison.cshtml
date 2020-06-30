@@ -1,0 +1,120 @@
+﻿@model Halbot.Models.ChartsComparisonModel
+
+@{
+    ViewData["Title"] = "Charts";
+    Layout = "_Layout";
+}
+
+<partial name="_ChartsMenu" , model="new ChartsMenuModel { CurrentChart = ChartsMenuModel.ChartType.Comparison }" />
+
+<br />
+
+<p><b>This year compared to last years, up to today</b></p>
+
+<table>
+    <tr>
+        <td colspan="3">Total distance:</td>
+    </tr>
+
+    @foreach (var row in Model.Kilometers)
+    {
+        var color = string.Empty;
+        color = (row.Key == DateTime.Now.Year) ? "#c8981e" : "goldenrod";
+
+        <tr>
+            <td>@row.Key</td>
+            <td class="right">@row.Value</td>
+            <td width="700px">
+                <div style="display: inline-block; width: @Math.Round((100 / (Model.Kilometers.Values.Max() / (double) row.Value)) * (DateTime.Now.DayOfYear / 365.00))%; height: 100%; background-color: @color">&nbsp;</div>
+            </td>
+        </tr>
+    }
+</table>
+
+<br />
+
+<table>
+    <tr>
+        <td colspan="3">Number of runs:</td>
+    </tr>
+
+    @foreach (var row in Model.Runs)
+    {
+        var color = string.Empty;
+        color = (row.Key == DateTime.Now.Year) ? "chocolate" : "#da8446";
+
+        <tr>
+            <td>@row.Key</td>
+            <td class="right">@row.Value</td>
+            <td width="700px">
+                <div style="display: inline-block; width: @Math.Round((100 / (Model.Runs.Values.Max() / (double) row.Value)) * (DateTime.Now.DayOfYear / 365.00))%; height: 100%; background-color: @color">&nbsp;</div>
+            </td>
+        </tr>
+    }
+</table>
+
+<br />
+
+<table>
+    <tr>
+        <td colspan="3">Number of runs faster than 5:00 min/km:</td>
+    </tr>
+
+    @foreach (var row in Model.FastRuns)
+    {
+        var color = string.Empty;
+        color = (row.Key == DateTime.Now.Year) ? "#4d8182" : "cadetblue";
+
+        <tr>
+            <td>@row.Key</td>
+            <td class="right">@row.Value</td>
+            <td width="700px">
+                <div style="display: inline-block; width: @Math.Round((100 / (Model.FastRuns.Values.Max() / (double) row.Value)) * (DateTime.Now.DayOfYear / 365.00))%; height: 100%; background-color: @color">&nbsp;</div>
+            </td>
+        </tr>
+    }
+</table>
+
+<br />
+
+<table>
+    <tr>
+        <td colspan="3">Total climb:</td>
+    </tr>
+
+    @foreach (var row in Model.Climb)
+    {
+        var color = string.Empty;
+        color = (row.Key == DateTime.Now.Year) ? "#759975" : "darkseagreen";
+
+        <tr>
+            <td>@row.Key</td>
+            <td class="right">@row.Value</td>
+            <td width="700px">
+                <div style="display: inline-block; width: @Math.Round((100 / (Model.Climb.Values.Max() / (double) row.Value)) * (DateTime.Now.DayOfYear / 365.00))%; height: 100%; background-color: @color">&nbsp;</div>
+            </td>
+        </tr>
+    }
+</table>
+
+<br />
+
+<table>
+    <tr>
+        <td colspan="3">number of runs with climb higher than 100m:</td>
+    </tr>
+
+    @foreach (var row in Model.ClimbRuns)
+    {
+        var color = string.Empty;
+        color = (row.Key == DateTime.Now.Year) ? "#4e664e" : "#688868";
+
+        <tr>
+            <td>@row.Key</td>
+            <td class="right">@row.Value</td>
+            <td width="700px">
+                <div style="display: inline-block; width: @Math.Round((100 / (Model.ClimbRuns.Values.Max() / (double) row.Value)) * (DateTime.Now.DayOfYear / 365.00))%; height: 100%; background-color: @color">&nbsp;</div>
+            </td>
+        </tr>
+    }
+</table>

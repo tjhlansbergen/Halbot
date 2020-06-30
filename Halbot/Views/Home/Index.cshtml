@@ -18,6 +18,9 @@
             <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Pace} m/km")</a>
         </td>
         <td>
+            <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Climb:#}m")</a>
+        </td>
+        <td>
             <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Date:D}")</a>
         </td>
         <td>
