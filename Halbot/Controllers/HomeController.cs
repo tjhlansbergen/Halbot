@@ -5,8 +5,12 @@ using Halbot.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Halbot.BusinessLayer.Translators;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting.Internal;
+
 
 //using JsonException = System.Text.Json.JsonException;
 
@@ -15,7 +19,14 @@ namespace Halbot.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly DatabaseContext _dbcontext = new DatabaseContext();
+        private readonly DatabaseContext _dbcontext;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public HomeController(IWebHostEnvironment webHostEnvironment)
+        {
+            _dbcontext = new DatabaseContext();
+            _webHostEnvironment = webHostEnvironment;
+        }
 
         public IActionResult Index()
         {
@@ -79,6 +90,12 @@ namespace Halbot.Controllers
                 ChartsMenuModel.ChartType.Workload => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext))),
                 _ => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext))),
             };
+        }
+
+        public IActionResult Backup()
+        {
+            string content = Path.Join(_webHostEnvironment.ContentRootPath, "App_Data", "Halbot.db");
+            return PhysicalFile(content, "application/x-sqlite3");
         }
     }
 }

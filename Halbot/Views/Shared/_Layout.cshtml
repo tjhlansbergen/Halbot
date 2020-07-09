@@ -26,7 +26,10 @@
 
 
         <footer>
-            <p>&copy; @DateTime.UtcNow.Year Halbot v2.01 - <a asp-area="" asp-controller="Home" asp-action="Log">View log</a></p>
+            <p>
+                &copy; @DateTime.UtcNow.Year Halbot v2.01 - <a asp-area="" asp-controller="Home" asp-action="Log">View log</a>
+                @if (ViewData["Title"].ToString() == "Log") {  <a asp-area="" asp-controller="Home" asp-action="Backup">- Get backup</a> }
+            </p>
         </footer>
     </div>
 
