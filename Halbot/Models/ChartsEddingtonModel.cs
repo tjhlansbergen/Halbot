@@ -11,7 +11,9 @@ namespace Halbot.Models
         {
             public int Number { get; set; }
             public int ActivityCount { get; set; }
+            public DateTime DateCompleted { get; set; }
             public bool EddingtonComplete => ActivityCount >= Number;
+            
         }
 
         public List<HalbotActivity> Activities { get; }
@@ -35,6 +37,11 @@ namespace Halbot.Models
                     Number = i,
                     ActivityCount = Activities.Count(activity => activity.Distance >= i*1000)
                 });
+            }
+
+            foreach (var eddingtonNumberCompleted in EddingtonNumbers.Where(e => e.EddingtonComplete))
+            {
+                eddingtonNumberCompleted.DateCompleted = Activities.Where(a => a.Distance >= eddingtonNumberCompleted.Number*1000).OrderBy(a => a.Date).ElementAt(eddingtonNumberCompleted.Number).Date;
             }
         }
     }

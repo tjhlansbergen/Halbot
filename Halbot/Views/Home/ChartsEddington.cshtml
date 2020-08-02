@@ -27,14 +27,13 @@
             <td>
                 @if (row.EddingtonComplete)
                 {
-                    <text>Done!</text>
+                    <text>Completed on: @row.DateCompleted.ToString("dd-MM-yyyy")</text>
                 }
                 else
                 {
                     <text>@(row.Number - row.ActivityCount) todo</text>
                 }
             </td>
-            <td>Activities completed:</td>
             <td class="right">@row.ActivityCount</td>
         </tr>
     }
