@@ -1,0 +1,43 @@
+﻿@model Halbot.Models.ChartsEddingtonModel
+
+@{
+    ViewData["Title"] = "Charts";
+    Layout = "_Layout";
+}
+
+<partial name="_ChartsMenu" , model="new ChartsMenuModel { CurrentChart = ChartsMenuModel.ChartType.Eddington }" />
+
+<br />
+
+<p><b>Eddington chart</b></p>
+
+<p style="color: #033f63">My Eddington Number:<b> @Model.EddingtonNumbers.Where(e => e.EddingtonComplete).Select(e => e.Number).Max()</b></p>
+
+<table>
+    @foreach (var row in Model.EddingtonNumbers)
+    {
+        var color = "red";
+        if (row.EddingtonComplete)
+        {
+            color = "green";
+        }
+        <tr style="color: @color">
+
+            <td>@row.Number</td>
+            <td>
+                @if (row.EddingtonComplete)
+                {
+                    <text>Done!</text>
+                }
+                else
+                {
+                    <text>@(row.Number - row.ActivityCount) todo</text>
+                }
+            </td>
+            <td>Activities completed:</td>
+            <td class="right">@row.ActivityCount</td>
+        </tr>
+    }
+</table>
+<br/>
+

@@ -70,32 +70,40 @@ namespace Halbot.Controllers
 
         public IActionResult NextChart(ChartsMenuModel.ChartType chart)
         {
-            return chart switch
-            {
-                ChartsMenuModel.ChartType.Progression => View("ChartsWorkload", new ChartsWorkloadModel(ActivityCache.Get(_dbcontext))),
-                ChartsMenuModel.ChartType.Workload => View("ChartsVolume", new ChartsVolumeModel(ActivityCache.Get(_dbcontext))),
-                ChartsMenuModel.ChartType.Volume => View("ChartsComparison", new ChartsComparisonModel(ActivityCache.Get(_dbcontext))),
-                ChartsMenuModel.ChartType.Comparison => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext))),
-                _ => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext))),
-            };
+            return ChartMenuHelper((int)chart + 1);
         }
 
         public IActionResult PreviousChart(ChartsMenuModel.ChartType chart)
         {
-            return chart switch
-            {
-                ChartsMenuModel.ChartType.Progression => View("ChartsComparison", new ChartsComparisonModel(ActivityCache.Get(_dbcontext))),
-                ChartsMenuModel.ChartType.Comparison => View("ChartsVolume", new ChartsVolumeModel(ActivityCache.Get(_dbcontext))),
-                ChartsMenuModel.ChartType.Volume => View("ChartsWorkload", new ChartsWorkloadModel(ActivityCache.Get(_dbcontext))),
-                ChartsMenuModel.ChartType.Workload => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext))),
-                _ => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext))),
-            };
+            return ChartMenuHelper((int)chart - 1);
         }
 
         public IActionResult Backup()
         {
             string content = Path.Join(_webHostEnvironment.ContentRootPath, "App_Data", "Halbot.db");
             return PhysicalFile(content, "application/x-sqlite3");
+        }
+
+        private ActionResult ChartMenuHelper(int index)
+        {
+            if (index == 0) index = 5;
+            if (index == 6) index = 1;
+
+            switch (index)
+            {
+                case 1:
+                    return View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext)));
+                case 2:
+                    return View("ChartsWorkload", new ChartsWorkloadModel(ActivityCache.Get(_dbcontext)));
+                case 3:
+                    return View("ChartsVolume", new ChartsVolumeModel(ActivityCache.Get(_dbcontext)));
+                case 4:
+                    return View("ChartsComparison", new ChartsComparisonModel(ActivityCache.Get(_dbcontext)));
+                case 5:
+                    return View("ChartsEddington", new ChartsEddingtonModel(ActivityCache.Get(_dbcontext)));
+                default:
+                    return View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext)));
+            }
         }
     }
 }

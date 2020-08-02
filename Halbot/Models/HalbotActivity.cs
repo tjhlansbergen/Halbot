@@ -34,7 +34,8 @@ namespace Halbot.Models
 
         public string Pace => PaceForSpeed(Speed);
 
-        public int Effort => (int) Math.Round(((Distance / 1000) + ((Climb + Descent) / 100)) * (Speed / 1.20));
+        public int Effort => (int) Math.Round(((Distance + (Climb * 8)) * Speed) / 1000);
+
 
         //helpers
         public static int WeekOfYear(DateTime date)
