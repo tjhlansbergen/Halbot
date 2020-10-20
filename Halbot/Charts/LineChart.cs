@@ -49,12 +49,12 @@ namespace Halbot.Charts
             html.AppendLine("var ctx = c.getContext(\"2d\");");
             html.Append(Environment.NewLine);
 
-            int left = 15;
+            int left = -10;
 
             foreach (var set in DataSets)
             {
                 html.AppendLine(CreateSection(set, left));
-                left += (set.Values.Count - 1) * 2;
+                left += (set.Values.Count - 1) * 1;
             }
 
             html.AppendLine("</script>");
@@ -76,10 +76,10 @@ namespace Halbot.Charts
 
             for (int i = 0; i < dataSet.Values.Count; i++)
             {
-                html.AppendLine($"ctx.lineTo({left + (i * 2)}, {Height - dataSet.Values[i]});");
+                html.AppendLine($"ctx.lineTo({left + (i * 1)}, {Height - dataSet.Values[i]});");
             }
 
-            html.AppendLine($"ctx.lineTo({left + ((dataSet.Values.Count - 1) * 2)}, {Height});");
+            html.AppendLine($"ctx.lineTo({left + ((dataSet.Values.Count - 1) * 1)}, {Height});");
 
             html.AppendLine("ctx.fill();");
             return html.ToString();

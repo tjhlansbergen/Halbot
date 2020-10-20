@@ -86,24 +86,21 @@ namespace Halbot.Controllers
 
         private ActionResult ChartMenuHelper(int index)
         {
-            if (index == 0) index = 5;
-            if (index == 6) index = 1;
+            var numOfCharts = Enum.GetNames(typeof(ChartsMenuModel.ChartType)).Length;
 
-            switch (index)
+            if (index == 0) index = numOfCharts;
+            if (index == numOfCharts + 1) index = 1;
+
+            return index switch
             {
-                case 1:
-                    return View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext)));
-                case 2:
-                    return View("ChartsWorkload", new ChartsWorkloadModel(ActivityCache.Get(_dbcontext)));
-                case 3:
-                    return View("ChartsVolume", new ChartsVolumeModel(ActivityCache.Get(_dbcontext)));
-                case 4:
-                    return View("ChartsComparison", new ChartsComparisonModel(ActivityCache.Get(_dbcontext)));
-                case 5:
-                    return View("ChartsEddington", new ChartsEddingtonModel(ActivityCache.Get(_dbcontext)));
-                default:
-                    return View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext)));
-            }
+                1 => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext))),
+                2 => View("ChartsMetrics", new ChartsMetricsModel(ActivityCache.Get(_dbcontext))),
+                3 => View("ChartsWorkload", new ChartsWorkloadModel(ActivityCache.Get(_dbcontext))),
+                4 => View("ChartsVolume", new ChartsVolumeModel(ActivityCache.Get(_dbcontext))),
+                5 => View("ChartsComparison", new ChartsComparisonModel(ActivityCache.Get(_dbcontext))),
+                6 => View("ChartsEddington", new ChartsEddingtonModel(ActivityCache.Get(_dbcontext))),
+                _ => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext)))
+            };
         }
     }
 }

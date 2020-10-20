@@ -18,8 +18,8 @@ namespace Halbot.Models
             Activities = activities;
 
             // create charts
-            DistanceChart = new LineChart("Distance", 860, 400);
-            ClimbChart = new LineChart("Climb", 860, 400);
+            DistanceChart = new LineChart("Distance", 900, 400);
+            ClimbChart = new LineChart("Climb", 900, 400);
 
             FillChart(DistanceChart, "Distance",25, "goldenrod", "#c8981e"); // 1000, for meters to km / 40 to fit in graph = 25
             FillChart(ClimbChart, "Climb", 0.2, "darkseagreen", "#70a970"); // * 5 to fit in graph (2000m in 400px)
@@ -31,13 +31,13 @@ namespace Halbot.Models
 
             // we determine 52 datapoints per year (every seventh day), find out how many there are in the first and current year
             // thats the number of datapoints we'll use for the first year
-            var thisYearPoints = DateTime.Now.DayOfYear / 7;
-            var firstYearPoints = 52 - thisYearPoints;
+            var thisYearPoints = (DateTime.Now.DayOfYear / 4) + 1;
+            var firstYearPoints = 91 - thisYearPoints;
 
             int closingValue = 0;
 
-            // create datasets for last 9 years (including the current year)
-            for (int i = DateTime.Now.Year - 8; i <= DateTime.Now.Year; i++)
+            // create datasets for last 8 years (including the current year)
+            for (int i = DateTime.Now.Year - 10; i <= DateTime.Now.Year; i++)
             {
                 List<int> values = new List<int>
                 {
@@ -45,11 +45,10 @@ namespace Halbot.Models
                 };
 
                 // get values
-                for (int j = 0; j < 53; j++)
+                for (int j = 1; j < 92; j++)
                 {
-                    var pointDate = new DateTime(i, 1, 1).AddDays(j * 7);
+                    var pointDate = new DateTime(i, 1, 1).AddDays(j * 4);
                     double total = 0;
-
 
                     total = property switch
                     {
@@ -61,7 +60,7 @@ namespace Halbot.Models
                 }
 
                 // if this is the first year, slice that year up to the current date
-                if (i == DateTime.Now.Year - 8)
+                if (i == DateTime.Now.Year - 10)
                 {
                     values = values.TakeLast(firstYearPoints).ToList();
                 }
@@ -69,7 +68,7 @@ namespace Halbot.Models
                 //if this is the current year, slice of the remainder of the year
                 if (i == DateTime.Now.Year)
                 {
-                    values = values.Take(thisYearPoints).ToList();
+                    values = values.Take(thisYearPoints + 2).ToList();
                 }
 
                 // create dataset
