@@ -24,6 +24,17 @@ table {
     border-collapse: collapse;
 }
 
+.imglnk {
+    text-align: center;
+    width: 100%;
+}
+
+.imglnk img {
+    padding-top: 15px;
+    text-align: center;
+    width: 33%;
+}
+
 .alternating tr:nth-of-type(odd) {
     background-color: #f9f2ec;
 }
