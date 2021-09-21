@@ -41,7 +41,7 @@ namespace Halbot.Models
 
             foreach (var eddingtonNumberCompleted in EddingtonNumbers.Where(e => e.EddingtonComplete))
             {
-                eddingtonNumberCompleted.DateCompleted = Activities.Where(a => a.Distance >= eddingtonNumberCompleted.Number*1000).OrderBy(a => a.Date).ElementAt(eddingtonNumberCompleted.Number).Date;
+                eddingtonNumberCompleted.DateCompleted = Activities.Where(a => a.Distance >= eddingtonNumberCompleted.Number*1000).OrderBy(a => a.Date).ElementAt(eddingtonNumberCompleted.Number - 1).Date;
             }
         }
     }
