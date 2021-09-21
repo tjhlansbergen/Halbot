@@ -63,7 +63,7 @@ namespace Halbot.Data.Models
         public long? ParentTypeId { get; set; }
 
         [JsonProperty("sortOrder")]
-        public long SortOrder { get; set; }
+        public long? SortOrder { get; set; }
     }
 
     public class ActivityUuid
