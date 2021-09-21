@@ -63,6 +63,11 @@ namespace Halbot.Controllers
             return View("Run", ActivityCache.Get(_dbcontext).Single(a => a.Id == id));
         }
 
+        public IActionResult Plan()
+        {
+            return View("Plan", new PlanModel(_dbcontext.PlanRecords.OrderBy(p => p.Date).ThenByDescending(p => p.Color).ToList()));
+        }
+
         public IActionResult Log()
         {
             return View("Log", new LogModel(_dbcontext.LogRecords.OrderByDescending(l => l.DateTime).Take(40).ToList()));
