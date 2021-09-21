@@ -89,8 +89,8 @@ namespace Halbot.Code.Charts
                                               100.00;
 
                         // surrounding table-cell
-                        charthtml.Append(string.Format("<td style=\"vertical-align: bottom; width: {0}%;\">",
-                            barwidth));
+                        charthtml.Append(string.Format("<td style=\"vertical-align: bottom; width: {0}%; height: {1}px;\">",
+                            barwidth, ChartHeight));
                         // the actual bar as div
                         charthtml.Append(string.Format(
                             "<div class=\"{0} {1}\" style=\"width: 100%; height: {2}%\"></div>", Name,
