@@ -13,7 +13,7 @@ namespace Halbot.BusinessLayer.Translators
 
             result.AddRange(new ClassicTranslator().Parse(records.Where(r => r.DataType == ActivityDataType.Classic)));
             result.AddRange(new TomTomTranslator().Parse(records.Where(r => r.DataType == ActivityDataType.TomTom)));
-            result.AddRange(new GarminTranslator().Parse(records.Where(r => r.DataType == ActivityDataType.Garmin)));
+            result.AddRange(new GarminTranslator().Parse(records.Where(r => r.DataType == ActivityDataType.Garmin || r.DataType == ActivityDataType.FlatGarmin)));
 
             return result;
         }

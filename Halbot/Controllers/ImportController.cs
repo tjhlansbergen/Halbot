@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 
 namespace Halbot.Controllers
 {
@@ -26,7 +27,7 @@ namespace Halbot.Controllers
                 var records = new ClassicFetcher().CreateRecords(classicActivities);
 
                 _logger.Log(LogSeverityLevel.Info, $"Adding {records.Count} classic activities to the database");
-                ActivityImport(records);
+                ActivityImport(_dbcontext, _logger, records);
             }
             catch (Exception ex)
             {
@@ -51,7 +52,7 @@ namespace Halbot.Controllers
                 var records = new TomTomFetcher().CreateRecords(tomTomActivityUrls);
 
                 _logger.Log(LogSeverityLevel.Info, $"Adding {records.Count} TomTom activities to the database");
-                ActivityImport(records);
+                ActivityImport(_dbcontext, _logger, records);
             }
             catch (Exception ex)
             {
@@ -74,9 +75,7 @@ namespace Halbot.Controllers
             try
             {
                 var records = new GarminFetcher().CreateRecords(garminActivityIds);
-
-                _logger.Log(LogSeverityLevel.Info, $"Adding {records.Count} Garmin activities to the database");
-                ActivityImport(records);
+                ActivityImport(_dbcontext, _logger, records);
             }
             catch (Exception ex)
             {
@@ -88,22 +87,31 @@ namespace Halbot.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private void ActivityImport(List<ActivityRecord> records)
+        public static void ActivityImport(DatabaseContext context, Logger logger, List<ActivityRecord> records, bool verbose = true)
         {
+            var count = 0;
             foreach (var incomingRecord in records)
             {
                 // check if we already have the activity by ID
-                if (_dbcontext.ActivityRecords.Any(r => r.Id == incomingRecord.Id))
+                if (context.ActivityRecords.Any(r => r.Id == incomingRecord.Id))
                 {
-                    _logger.Log(LogSeverityLevel.Warning, $"DUPLICATE: Activity with ID {incomingRecord.Id} already exists!");
+                    if (verbose)
+                    {
+                        logger.Log(LogSeverityLevel.Warning, $"Activity with ID {incomingRecord.Id} already exists!");
+                    }
                 }
                 else
                 {
-                    _dbcontext.ActivityRecords.Add(incomingRecord);
+                    context.ActivityRecords.Add(incomingRecord);
+                    count++;
                 }
             }
+            context.SaveChanges();
 
-            _dbcontext.SaveChanges();
+            if (verbose)
+            {
+                logger.Log(LogSeverityLevel.Info, $"Added {records.Count} Garmin activities to the database");
+            }
         }
     }
 }

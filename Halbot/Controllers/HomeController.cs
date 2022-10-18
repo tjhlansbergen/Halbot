@@ -7,8 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Halbot.BusinessLayer.GarminConnect;
 using Halbot.BusinessLayer.Translators;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting.Internal;
 
 
@@ -20,12 +22,15 @@ namespace Halbot.Controllers
     public class HomeController : Controller
     {
         private readonly DatabaseContext _dbcontext;
+        private readonly Logger _logger = new Logger();
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(IWebHostEnvironment webHostEnvironment)
+        public HomeController(IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
         {
             _dbcontext = new DatabaseContext();
             _webHostEnvironment = webHostEnvironment;
+            _configuration = configuration;
         }
 
         public IActionResult Index()
@@ -55,7 +60,15 @@ namespace Halbot.Controllers
 
         public IActionResult Import()
         {
-            return View("Import", new ImportModel());
+            var fromDate = ActivityCache.Get(_dbcontext).Max(a => a.Date);
+
+            if (new GarminContext(_configuration.GetValue<string>("GarminUser"),
+                    _configuration.GetValue<string>("GarminKey")).TryGetNewActivities(fromDate, DateTime.Now.AddDays(1),  "running", out List<ActivityRecord> records))
+            {
+                ImportController.ActivityImport(_dbcontext, _logger, records, verbose: true);
+            }
+
+            return Index();
         }
 
         public IActionResult Run(long id)

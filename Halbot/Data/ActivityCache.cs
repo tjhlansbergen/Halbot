@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Halbot.BusinessLayer.Translators;
+using Halbot.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Halbot.BusinessLayer.Translators;
-using Halbot.Models;
 
 namespace Halbot.Data
 {
