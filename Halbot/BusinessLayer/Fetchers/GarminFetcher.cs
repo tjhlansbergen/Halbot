@@ -20,7 +20,13 @@ namespace Halbot.BusinessLayer.Fetchers
                 if (string.IsNullOrWhiteSpace(activityId)) continue;
 
                 var url = $"https://connect.garmin.com/proxy/activity-service/activity/{activityId}";
-                var json = new WebClient().DownloadString(url);
+                string json;
+                using (var client = new WebClient())
+                {
+                    client.Headers.Add("nk", "NT");
+                    json = client.DownloadString(url);
+                }
+
                 var activity = JsonConvert.DeserializeObject<GarminJson>(json);
 
                 result.Add(new ActivityRecord()
