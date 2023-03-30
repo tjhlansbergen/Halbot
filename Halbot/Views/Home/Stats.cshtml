@@ -193,6 +193,51 @@
 
     <table>
         <tr>
+            <th>Top 5 highest point:</th>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        @foreach (var item in Model.HighestElevation)
+        {
+            <tr>
+                <td>@(Model.HighestElevation.IndexOf(item) + 1)<text>.</text></td>
+                <td>@Html.ActionLink(Math.Round(item.MaxElevation) + " meter", "Run", new { id = item.Id })</td>
+                <td>@Html.ActionLink("on " + @item.Date.ToString("dddd, MMMM dd yyyy"), "Run", new { id = item.Id })</td>
+                <td class="right" width="100px">
+                    <div style="display: inline-block; width: @Math.Round((100 / ((double) Model.HighestElevation.First().MaxElevation / (double) item.MaxElevation)))%; height: 100%; background-color: #bc8fbc">&nbsp;</div>
+                </td>
+            </tr>
+        }
+    </table>
+
+</div>
+<div class="box">
+
+    <table>
+        <tr>
+            <th>Lowest elevation:</th>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+
+        <tr>
+            <td><text>1.</text></td>
+            <td>@Html.ActionLink(Math.Round(Model.LowestElevation.MinElevation) + " meter", "Run", new { id = Model.LowestElevation.Id })</td>
+            <td>@Html.ActionLink("on " + Model.LowestElevation.Date.ToString("dddd, MMMM dd yyyy"), "Run", new { id = Model.LowestElevation.Id })</td>
+            <td class="right" width="100px">
+                &nbsp;
+            </td>
+        </tr>
+
+    </table>
+
+</div>
+<div class="box">
+
+    <table>
+        <tr>
             <th>Top 5 best week (by volume):</th>
         </tr>
         <tr>

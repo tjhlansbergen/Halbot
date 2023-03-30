@@ -16,6 +16,8 @@ namespace Halbot.Models
         public double Speed { get; set; } // average speed of activity in m/s
         public double Climb { get; set; } // climb in meters
         public double Descent { get; set; } // descent in meters
+        public double MaxElevation { get; set; }
+        public double MinElevation { get; set; }
         public double Lat { get; set; } // location as lat-lng
         public double Lng { get; set; } // location as lat-lng
         public double Duration { get; set; } // active time total in seconds

@@ -34,6 +34,8 @@ namespace Halbot.BusinessLayer.Translators
 
                 halbotActivity.Climb = garminActivity.SummaryDto.ElevationGain;
                 halbotActivity.Descent = garminActivity.SummaryDto.ElevationLoss;
+                halbotActivity.MaxElevation = garminActivity.SummaryDto.MaxElevation;
+                halbotActivity.MinElevation = garminActivity.SummaryDto.MinElevation;
                 halbotActivity.Date = garminActivity.SummaryDto.StartTimeLocal.DateTime;
                 halbotActivity.Distance = garminActivity.SummaryDto.Distance;
                 halbotActivity.Duration = garminActivity.SummaryDto.Duration;

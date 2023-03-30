@@ -23,6 +23,8 @@ namespace Halbot.Models
         public List<HalbotActivity> LongestRuns { get; private set; }
         public List<HalbotActivity> FastestRuns { get; private set; }
         public List<HalbotActivity> HighestRuns { get; private set; }
+        public List<HalbotActivity> HighestElevation { get; private set; }
+        public HalbotActivity LowestElevation { get; private set; }
         public List<HalbotActivity> BestEffort { get; private set; }
 
         public List<KeyValuePair<String, double>> BestWeeks { get; private set; }
@@ -46,6 +48,9 @@ namespace Halbot.Models
             FastestRuns = Activities.OrderByDescending(run => run.Speed).Take(5).ToList<HalbotActivity>();
             HighestRuns = Activities.OrderByDescending(run => run.Climb).Take(5).ToList<HalbotActivity>();
             BestEffort = Activities.OrderByDescending(run => run.Effort).Take(5).ToList<HalbotActivity>();
+            HighestElevation = Activities.OrderByDescending(run => run.MaxElevation).Take(5).ToList<HalbotActivity>();
+            LowestElevation = Activities.OrderBy(run => run.MinElevation).First();
+
 
             var weeks = Activities.GroupBy(run => new { run.Date.Year, run.Week });
             BestWeeks = new List<KeyValuePair<String, double>>();
