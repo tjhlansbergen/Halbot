@@ -1,100 +1,20 @@
 ﻿@model Halbot.Models.PlanModel
 
 @{
-	ViewData["Title"] = "Plan";
-	Layout = "_Layout";
+    ViewData["Title"] = "Plan";
+    Layout = "_Layout";
 }
 
 
 <!-- DISPLAY-->
-<table>
-	@foreach (var record in Model.PlanRecords)
-	{
-		<tr style="background-color: @record.Color">
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
-		</tr>
+@foreach (var record in Model.PlanRecords.OrderBy(p => p.Date))
+{
+    <div class="box">
+        <table>
+            <tr><th>@record.Date.ToLongDateString()</th></tr>
+            <tr><td>&nbsp;</td></tr>
+            <tr><td><b>@($"{record.Description}")</b></td></tr>
+        </table>
+    </div>
+}
 
-		<tr style="background-color: @record.Color;">
-			<td style="padding-left: 15px; padding-right: 15px;">
-				@if (record.Color == "#ffffff")
-				{
-					<text>&nbsp;</text>
-				}
-				else
-				{
-					<i><b>@($"{record.Date:D}")</b></i>
-				}
-				
-			</td>
-			<td style="text-align: right; padding-left: 15px; padding-right: 15px;">
-			@if (record.Color == "#ffffff")
-			{
-				<text>&nbsp;</text>
-			}
-			else
-			{
-				@if (record.Completed)
-				{
-					<a asp-area="" asp-controller="Plan" asp-action="ToggleComplete" asp-route-id="@record.Id">&#9745;</a>
-				}
-				else
-				{
-					<a asp-area="" asp-controller="Plan" asp-action="ToggleComplete" asp-route-id="@record.Id">&#9744;</a>
-				}
-			}
-			</td>
-		</tr>
-		<tr style="background-color: @record.Color">
-			<td style="padding-left: 15px; padding-right: 15px;">
-			@if (record.Color == "#ffffff")
-			{
-				<b>@record.Description</b>
-			}
-			else
-			{
-				@record.Description
-			}
-			</td>
-			<td style="text-align: right; padding-left: 15px; padding-right: 15px;">
-				<a asp-area="" asp-controller="Plan" asp-action="Delete" asp-route-id="@record.Id">&#10006</a>
-			</td>
-		</tr>
-
-		<tr style="background-color: @record.Color">
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
-		</tr>
-	}
-</table>
-
-<br />
-<hr />
-
-<!-- ADD -->
-<div class="box">
-
-	@using (Html.BeginForm("Add", "Plan", FormMethod.Post, new { enctype = "multipart/form-data" }))
-	{
-		<input type="date" name="date" id="date" />
-		<input type="color" name="color" id="color" />
-		<input type="text" name="description" id="description" />
-		<input type="submit" name="submit" id="Add" value="Add" />
-
-	}
-
-</div>
-
-<!-- color swatches -->
-<table>
-	<tr>
-		<td style="background-color: #CBE4F9; text-align: center;">CBE4F9</td>
-		<td style="background-color: #CDF5F6; text-align: center;">CDF5F6</td>
-		<td style="background-color: #EFF9DA; text-align: center;">EFF9DA</td>
-		<td style="background-color: #F9EBDF; text-align: center;">F9EBDF</td>
-		<td style="background-color: #F9D8D6; text-align: center;">F9D8D6</td>
-		<td style="background-color: #D6CDEA; text-align: center;">D6CDEA</td>
-	</tr>
-</table>
-
-<hr />

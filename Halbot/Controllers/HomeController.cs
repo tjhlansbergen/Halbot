@@ -65,7 +65,7 @@ namespace Halbot.Controllers
 
         public IActionResult Plan()
         {
-            return View("Plan", new PlanModel(_dbcontext.PlanRecords.OrderBy(p => p.Date).ThenByDescending(p => p.Color).ToList()));
+            return View("Plan", new PlanModel(PlanCache.Get()));
         }
 
         public IActionResult Log()
