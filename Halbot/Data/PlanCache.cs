@@ -43,7 +43,7 @@ namespace Halbot.Data
                 {
                     Description = c.Name,
                     Date = c.Due?.Date ?? DateTime.MinValue,
-                    Color = c.Labels.FirstOrDefault()?.Color ?? "white",
+                    Label = c.Labels.FirstOrDefault()?.Name ?? string.Empty,
                 }).ToList();
         }
     }

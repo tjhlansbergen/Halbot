@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Halbot.Charts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Halbot.Charts;
 
 namespace Halbot.Models
 {
@@ -24,21 +23,21 @@ namespace Halbot.Models
             var data1 = new CircleChart.DataSet("dataset", 120, 160, 250, 450);     // heartrate bounds: 110 - 190, speed bounds 2(m/s) - 5(m/s)
 
             // previous weeks
-            var previousWeeksSelection = Activities.Where(a => a.Date.Year == now.Year).Where(b => b.Week < HalbotActivity.WeekOfYear(now) - 1);
+            var previousWeeksSelection = Activities.Where(a => a.Date.Year == now.Year).Where(b => b.Week < now.Week() - 1);
             foreach (var activity in previousWeeksSelection)
             {
                 data1.Add(Convert.ToInt32(activity.Heartrate == 0 ? 140 : activity.Heartrate), Convert.ToInt32(activity.Speed * 100), Convert.ToInt32(activity.Distance * 0.002), "#cccccc");
             }
 
             // add last week
-            var lastWeekSelection = Activities.Where(a => a.Date.Year == now.Year).Where(b => b.Week == HalbotActivity.WeekOfYear(now) - 1);
+            var lastWeekSelection = Activities.Where(a => a.Date.Year == now.Year).Where(b => b.Week == now.Week() - 1);
             foreach (var activity in lastWeekSelection)
             {
                 data1.Add(Convert.ToInt32(activity.Heartrate == 0 ? 140 : activity.Heartrate), Convert.ToInt32(activity.Speed * 100), Convert.ToInt32(activity.Distance * 0.002), "#0099cc");
             }
 
             // add the current week
-            var thisWeekSelection = Activities.Where(a => a.Date.Year == now.Year).Where(b => b.Week == HalbotActivity.WeekOfYear(now));
+            var thisWeekSelection = Activities.Where(a => a.Date.Year == now.Year).Where(b => b.Week == now.Week());
             foreach (var activity in thisWeekSelection)
             {
                 data1.Add(Convert.ToInt32(activity.Heartrate == 0 ? 140 : activity.Heartrate), Convert.ToInt32(activity.Speed * 100), Convert.ToInt32(activity.Distance * 0.002), "gold");

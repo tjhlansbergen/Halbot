@@ -7,13 +7,34 @@
 
 
 <!-- DISPLAY-->
-@foreach (var record in Model.PlanRecords.OrderBy(p => p.Date))
+@foreach (var week in Model.Weeks.OrderBy(p => p.Key))
 {
     <div class="box">
         <table>
-            <tr><th>@record.Date.ToLongDateString()</th></tr>
-            <tr><td>&nbsp;</td></tr>
-            <tr><td><b>@($"{record.Description}")</b></td></tr>
+            <tr>
+                <th>Week: @week.Key</th>
+            </tr>
+            @foreach (var record in week.Value)
+            {
+                <tr>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    @if (record.Date == DateTime.UtcNow.Date)
+                    {
+                        // today
+                        <th>@record.Date.ToLongDateString()</th>
+                    }
+                    else
+                    {
+                        <td>@record.Date.ToLongDateString()</td>
+                    }
+
+                    <td class="right">@($"{record.Description}")</td>
+                    <td>&nbsp;</td>
+                    <td class=@record.Label>&nbsp;</td>
+                </tr>
+            }
         </table>
     </div>
 }

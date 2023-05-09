@@ -32,37 +32,10 @@ namespace Halbot.Models
         }
 
         //Conversion properties
-        public int Week => WeekOfYear(Date);
-
+        public int Week => Date.Week();
         public string Pace => PaceForSpeed(Speed);
 
         public int Effort => (int) Math.Round(((Distance + (Climb * 8)) * Speed) / 1000);
-
-
-        //helpers
-        public static int WeekOfYear(DateTime date)
-        {
-            var day = (int)CultureInfo.CurrentCulture.Calendar.GetDayOfWeek(date);
-            return CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(date.AddDays(4 - (day == 0 ? 7 : day)), CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-        }
-
-        public static DateTime FirstDateOfWeekIso8601(int year, int weekOfYear)
-        {
-            DateTime jan1 = new DateTime(year, 1, 1);
-            int daysOffset = DayOfWeek.Thursday - jan1.DayOfWeek;
-
-            DateTime firstThursday = jan1.AddDays(daysOffset);
-            var cal = CultureInfo.CurrentCulture.Calendar;
-            int firstWeek = cal.GetWeekOfYear(firstThursday, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
-
-            var weekNum = weekOfYear;
-            if (firstWeek <= 1)
-            {
-                weekNum -= 1;
-            }
-            var result = firstThursday.AddDays(weekNum * 7);
-            return result.AddDays(-3);
-        }
 
         public static string PaceForSpeed(double speed)
         {

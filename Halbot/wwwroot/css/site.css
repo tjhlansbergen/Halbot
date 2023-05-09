@@ -211,6 +211,25 @@ td.xlong {
     background-color: #ed5314;
 }
 
+/* plan label colors */
+td.Easy {
+    background-color: #94c748;
+}
+td.Interval {
+    background-color: #ae4787;
+}
+td.Race {
+    background-color: #ca3521;
+}
+td.Tempo {
+    background-color: #0c66e4;
+}
+td.Trail {
+    background-color: #b65c02;
+}
+td.Hills {
+    background-color: #e2b203;
+}
 
 /* Chart stuff */
 .lastvolume,

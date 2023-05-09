@@ -57,7 +57,7 @@ namespace Halbot.Models
             foreach (var items in weeks)
             {
                 var first = items.First<HalbotActivity>();
-                DateTime monday = HalbotActivity.FirstDateOfWeekIso8601(first.Date.Year, first.Week);
+                DateTime monday = FirstDateOfWeekIso8601(first.Date.Year, first.Week);
                 BestWeeks.Add(new KeyValuePair<string, double>(
                     $"{first.Date.Year} week {first.Week} ({monday.ToString("dd MMMM")} - {monday.AddDays(6).ToString("dd MMMM")})", Math.Round(items.Sum(run => run.Distance) / 1000, 2)));
             }
@@ -89,9 +89,9 @@ namespace Halbot.Models
             DateTime now = DateTime.Now;
 
             //get selection of activities per week
-            var this_week_selection = Activities.Where(a => a.Date.Year == now.Year).Where(b => b.Week == HalbotActivity.WeekOfYear(now));
-            var last_week_selection = Activities.Where(a => a.Date.Year == now.Year).Where(b => b.Week == HalbotActivity.WeekOfYear(now) - 1);
-            if (HalbotActivity.WeekOfYear(now) == 1) last_week_selection = Activities.Where(a => a.Date.Year == now.Year - 1).Where(b => b.Week == 52);
+            var this_week_selection = Activities.Where(a => a.Date.Year == now.Year).Where(b => b.Week == now.Week());
+            var last_week_selection = Activities.Where(a => a.Date.Year == now.Year).Where(b => b.Week == now.Week() - 1);
+            if (now.Week() == 1) last_week_selection = Activities.Where(a => a.Date.Year == now.Year - 1).Where(b => b.Date.Week() == 52);
 
             //create list and populate
             Week = new List<Tuple<string, string, string>>();
@@ -255,6 +255,26 @@ namespace Halbot.Models
             Alltime.Add(new Tuple<String, String>("Average effort:", _averageEffort(Activities)));
             Alltime.Add(new Tuple<String, String>("Average distance:", _averageDistance(Activities)));
 
+        }
+
+
+        //helper
+        public static DateTime FirstDateOfWeekIso8601(int year, int weekOfYear)
+        {
+            DateTime jan1 = new DateTime(year, 1, 1);
+            int daysOffset = DayOfWeek.Thursday - jan1.DayOfWeek;
+
+            DateTime firstThursday = jan1.AddDays(daysOffset);
+            var cal = CultureInfo.CurrentCulture.Calendar;
+            int firstWeek = cal.GetWeekOfYear(firstThursday, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+
+            var weekNum = weekOfYear;
+            if (firstWeek <= 1)
+            {
+                weekNum -= 1;
+            }
+            var result = firstThursday.AddDays(weekNum * 7);
+            return result.AddDays(-3);
         }
 
     }

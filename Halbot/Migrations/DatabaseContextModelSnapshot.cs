@@ -67,7 +67,7 @@ namespace Halbot.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Color")
+                    b.Property<string>("Label")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("Completed")

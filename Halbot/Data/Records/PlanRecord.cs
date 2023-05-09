@@ -6,6 +6,6 @@ namespace Halbot.Data.Records
     {
         public DateTime Date { get; set; }
         public string Description { get; set; }
-        public string Color { get; set; }
+        public string Label { get; set; }
     }
 }
