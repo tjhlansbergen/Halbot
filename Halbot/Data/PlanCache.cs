@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Microsoft.Extensions.Configuration;
 
 namespace Halbot.Data
 {
@@ -12,11 +13,11 @@ namespace Halbot.Data
     {
         private static List<PlanRecord> _plannedActivities = new List<PlanRecord>();
 
-        public static List<PlanRecord> Get()
+        public static List<PlanRecord> Get(string trelloUrl)
         {
             if (!_plannedActivities.Any())
             {
-                FetchFromTrello();
+                FetchFromTrello(trelloUrl);
             }
 
             return _plannedActivities;
@@ -27,13 +28,12 @@ namespace Halbot.Data
             _plannedActivities.Clear();
         }
 
-        private static void FetchFromTrello()
+        private static void FetchFromTrello(string trelloUrl)
         {
-            const string url = "https://api.trello.com/1/boards/fvn5LZrM/cards?key=c0f37d8292dbac2cb721710266ba4f61&token=ATTAec0056728891065984b110fa3c376975aa79a39c7e2137eaf000e5332a26650328695366\r\n";
             string json;
             using (var client = new WebClient())
             {
-                json = client.DownloadString(url);
+                json = client.DownloadString(trelloUrl);
             }
 
             var cards = JsonConvert.DeserializeObject<List<TrelloCard>>(json);

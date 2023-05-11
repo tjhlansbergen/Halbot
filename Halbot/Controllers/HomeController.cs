@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using Halbot.BusinessLayer.Translators;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting.Internal;
 
 
@@ -21,11 +22,13 @@ namespace Halbot.Controllers
     {
         private readonly DatabaseContext _dbcontext;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(IWebHostEnvironment webHostEnvironment)
+        public HomeController(IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
         {
             _dbcontext = new DatabaseContext();
             _webHostEnvironment = webHostEnvironment;
+            _configuration = configuration;
         }
 
         public IActionResult Index()
@@ -65,7 +68,7 @@ namespace Halbot.Controllers
 
         public IActionResult Plan()
         {
-            return View("Plan", new PlanModel(PlanCache.Get()));
+            return View("Plan", new PlanModel(PlanCache.Get(_configuration.GetValue<string>("TRELLO_URL"))));
         }
 
         public IActionResult Log()
