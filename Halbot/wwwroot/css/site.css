@@ -240,7 +240,8 @@ td.Hills {
 .monthclimb,
 .weekvolume,
 .weekpace,
-.weekclimb {
+.weekclimb,
+.planchart{
     padding: 0px;
     font-size: 16px;
     text-align: center;

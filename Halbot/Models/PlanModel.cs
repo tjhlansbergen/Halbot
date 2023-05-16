@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using Halbot.Code.Charts;
 using System.Text;
+using System.Globalization;
 
 namespace Halbot.Models
 {
@@ -55,12 +56,12 @@ namespace Halbot.Models
 
         private static ColumnChart FillChart(Dictionary<int, PlanWeek> weeks)
         {
-            var chart = new ColumnChart("plan", 100);
+            var chart = new ColumnChart("planchart", 100);
             var volume = new ColumnChart.DataSet("plan");
 
             foreach (var week in weeks)
             {
-                volume.Add(string.Empty, string.Empty, week.Value.WeekMileage);
+                volume.Add(week.Key.ToString(), string.Empty, week.Value.WeekMileage);
             }
 
             chart.AddDataSet(volume);
