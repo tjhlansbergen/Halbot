@@ -5,6 +5,11 @@
     Layout = "_Layout";
 }
 
+<!-- graph -->
+<p>Plan totals:</p>
+@Html.Raw(Model.Chart.CreateHTML())
+<br />
+
 
 <!-- DISPLAY-->
 @foreach (var week in Model.Weeks.OrderBy(p => p.Key))

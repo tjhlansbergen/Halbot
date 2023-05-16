@@ -3,6 +3,8 @@ using Halbot.Data.Records;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Halbot.Code.Charts;
+using System.Text;
 
 namespace Halbot.Models
 {
@@ -16,6 +18,8 @@ namespace Halbot.Models
     {
         // properties
         public Dictionary<int, PlanWeek> Weeks { get; }
+
+        public ColumnChart Chart { get; }
 
         // constructor
         public PlanModel(List<PlanRecord> planRecords)
@@ -35,6 +39,8 @@ namespace Halbot.Models
                 })
                 .Where(p => p.Value.Runs.Any())
                 .ToDictionary(p => p.Key, p => p.Value);
+
+            Chart = FillChart(Weeks);
         }
 
         private static int WeeklyMileage(IEnumerable<PlanRecord> runs)
@@ -45,6 +51,20 @@ namespace Halbot.Models
                     && int.TryParse(r.Description.Split("km")[0], out _))
                 .Select(r => int.Parse(r.Description.Split("km")[0]))
                 .Sum();
+        }
+
+        private static ColumnChart FillChart(Dictionary<int, PlanWeek> weeks)
+        {
+            var chart = new ColumnChart("plan", 100);
+            var volume = new ColumnChart.DataSet("plan");
+
+            foreach (var week in weeks)
+            {
+                volume.Add(string.Empty, string.Empty, week.Value.WeekMileage);
+            }
+
+            chart.AddDataSet(volume);
+            return chart;
         }
     }
 }
