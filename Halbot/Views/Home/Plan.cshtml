@@ -12,9 +12,9 @@
     <div class="box">
         <table>
             <tr>
-                <th>Week: @week.Key</th>
+                <th>Week: @week.Key - @week.Value.WeekMileage<span>km</span></th>
             </tr>
-            @foreach (var record in week.Value)
+            @foreach (var record in week.Value.Runs)
             {
                 <tr>
                     <td>&nbsp;</td>
