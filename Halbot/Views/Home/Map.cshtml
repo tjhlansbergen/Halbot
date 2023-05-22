@@ -6,8 +6,8 @@
 }
 
 @section styles {
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.5.0/dist/leaflet.js" integrity="sha512-3Wcxp7F9bV2pl+MBgrL6Pz7AJASLpemmQPIiPA0lDs3ImF0z4JuuMIBPeirLbgIuhfH2gJyGWZjvm6M+Zr7L6Q==" crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script> <!-- Make sure you put this AFTER Leaflet's CSS -->
 }
 
 <div id="mapid" style="width: 900px; height: 900px;"></div>
@@ -16,27 +16,30 @@
 <script>
 
     var mymap = L.map('mapid').setView([52.145, 4.531], 4);
-
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw',
-        {
-            attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
-            tileSize: 512,
-            maxZoom: 18,
-            zoomOffset: -1,
-            id: 'mapbox/streets-v11',
-            accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
-        }).addTo(mymap);
+    
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(mymap);
 
     markers = [
         @for (int i = 0; i < Model.Geos.Count; i++)
         {
-            <text>{ lat: @Model.Geos[i].Lat.ToString(CultureInfo.InvariantCulture), lng: @Model.Geos[i].Lng.ToString(CultureInfo.InvariantCulture) },</text>
+            <text>{ 
+                lat: @Model.Geos[i].Lat.ToString(CultureInfo.InvariantCulture), 
+                lng: @Model.Geos[i].Lng.ToString(CultureInfo.InvariantCulture),
+                lnk: @Model.Geos[i].Id.ToString()
+            }, </text>
         }
     ];
 
-    for (var i = 0; i < markers.length; ++i) {
-        L.marker([markers[i].lat, markers[i].lng])
-            .addTo(mymap);
+    for (var i = 0; i < markers.length; ++i) {            
+        L.circleMarker([markers[i].lat, markers[i].lng], {
+            color: '#0c66e4',
+            fillColor: '#0c66e4',
+            fillOpacity: 0.0,
+            radius: 3
+        }).addTo(mymap).bindPopup('<a href="https://halbot2.azurewebsites.net/Home/Run/' + markers[i].lnk + '">View activity</a>');
     };
 
 </script>

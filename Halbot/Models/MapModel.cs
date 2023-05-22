@@ -28,10 +28,12 @@ namespace Halbot.Models
                 //filter out activities without location
                 if (item.Lat == 0 || item.Lng == 0) continue;
 
+                Geos.Add(item);
+
                 // add, while preventing items close together
                 if (!Geos.Any(i => Math.Round(i.Lat, _filterDecimals) == Math.Round(item.Lat, _filterDecimals) && Math.Round(i.Lng, _filterDecimals) == Math.Round(item.Lng, _filterDecimals)))
                 {
-                    Geos.Add(item);
+                    //
                 }
             }
         }
