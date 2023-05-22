@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Halbot.Models
+﻿namespace Halbot.Models
 {
     public class ChartsMenuModel
     {

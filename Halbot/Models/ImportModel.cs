@@ -1,7 +1,4 @@
-﻿using Halbot.Data;
-using System.Collections.Generic;
-
-namespace Halbot.Models
+﻿namespace Halbot.Models
 {
     public class ImportModel
     {

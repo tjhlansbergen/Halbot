@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Halbot.Charts;
-using Halbot.Data.Models;
 
 namespace Halbot.Models
 {

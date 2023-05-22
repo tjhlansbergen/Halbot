@@ -1,10 +1,7 @@
 ﻿using Halbot.Data;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Halbot.BusinessLayer.Translators;
-using Halbot.Data.Records;
 
 namespace Halbot.Controllers
 {

@@ -1,16 +1,11 @@
-﻿using Halbot.BusinessLayer.Fetchers;
-using Halbot.Data;
-using Halbot.Data.Records;
+﻿using Halbot.Data;
 using Halbot.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Halbot.BusinessLayer.Translators;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting.Internal;
 
 
 //using JsonException = System.Text.Json.JsonException;

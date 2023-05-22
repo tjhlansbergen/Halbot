@@ -1,9 +1,7 @@
 ﻿using Halbot.Data.Records;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using Halbot.Data.Models;
 using Newtonsoft.Json;
 

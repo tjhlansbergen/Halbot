@@ -1,11 +1,8 @@
 ﻿using System;
 using Halbot.Data.Records;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Halbot.Code.Charts;
-using System.Text;
-using System.Globalization;
 
 namespace Halbot.Models
 {
