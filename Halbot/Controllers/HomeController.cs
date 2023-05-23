@@ -66,9 +66,21 @@ namespace Halbot.Controllers
             return View("Plan", new PlanModel(PlanCache.Get(_configuration.GetValue<string>("TRELLO_URL"))));
         }
 
+        public IActionResult RefreshPlan()
+        {
+            PlanCache.InvalidateCache();
+            return View("Plan", new PlanModel(PlanCache.Get(_configuration.GetValue<string>("TRELLO_URL"))));
+        }
+
         public IActionResult Log()
         {
             return View("Log", new LogModel(_dbcontext.LogRecords.OrderByDescending(l => l.DateTime).Take(40).ToList()));
+        }
+
+        public IActionResult Backup()
+        {
+            string content = Path.Join(_webHostEnvironment.ContentRootPath, "App_Data", "Halbot.db");
+            return PhysicalFile(content, "application/x-sqlite3");
         }
 
         public IActionResult NextChart(ChartsMenuModel.ChartType chart)
@@ -81,11 +93,6 @@ namespace Halbot.Controllers
             return ChartMenuHelper((int)chart - 1);
         }
 
-        public IActionResult Backup()
-        {
-            string content = Path.Join(_webHostEnvironment.ContentRootPath, "App_Data", "Halbot.db");
-            return PhysicalFile(content, "application/x-sqlite3");
-        }
 
         private ActionResult ChartMenuHelper(int index)
         {
