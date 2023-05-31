@@ -30,6 +30,10 @@
                 <td class="right">@($"{race.Distance / 1000:0.00} km")</td>
             </tr>
             <tr>
+                <td>Climb:</td>
+                <td class="right">@($"{race.Climb:#}m")</td>
+            </tr>
+            <tr>
                 <td>Duration:</td>
                 <td class="right">@((race.Duration == 0 ? "-" : TimeSpan.FromSeconds(race.Duration).ToString(@"hh\:mm\:ss")))</td>
             </tr>
