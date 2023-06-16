@@ -170,7 +170,7 @@
 
     <table>
         <tr>
-            <th>Top 5 highest climb:</th>
+            <th>Top 5 total climb:</th>
         </tr>
         <tr>
             <td>&nbsp;</td>
@@ -216,7 +216,7 @@
 
     <table>
         <tr>
-            <th>Lowest elevation:</th>
+            <th>Lowest point:</th>
         </tr>
         <tr>
             <td>&nbsp;</td>
@@ -272,6 +272,8 @@
     </table>
 
 </div>
+
+
 <div class="box">
 
     <table>
@@ -290,6 +292,22 @@
         }
     </table>
 </div>
+
+<div class="box">
+    <table>
+        <tr>
+            <th>Year total (projected):</th>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+            <td>@DateTime.Now.Year</td>
+            <td class="right">@Model.YtD.ToString("F0") km</td>
+        <tr>
+        </tr>
+    </table>
+</div>
+
 <div class="box">
     <table>
         <tr>
