@@ -29,6 +29,7 @@ namespace Halbot.BusinessLayer.Translators
                 halbotActivity.Description = record.Description;
                 halbotActivity.IsRace = record.IsRace;
                 halbotActivity.DataType = record.DataType;
+                halbotActivity.Journal = record.Gpx;    // yes, this is a hack
 
                 halbotActivity.Climb = garminActivity.SummaryDto.ElevationGain;
                 halbotActivity.Descent = garminActivity.SummaryDto.ElevationLoss;

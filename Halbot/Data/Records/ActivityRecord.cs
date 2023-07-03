@@ -11,6 +11,6 @@ namespace Halbot.Data.Records
         public string SerializedData { get; set; }
         public string Description { get; set; }
         public bool IsRace { get; set; }
-        public string Gpx { get; set; }
+        public string Gpx { get; set; }     // re-used as 'journal'
     }
 }

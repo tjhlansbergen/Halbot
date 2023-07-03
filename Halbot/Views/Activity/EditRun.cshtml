@@ -8,13 +8,17 @@
 <partial name="_RunDetails" for="@Model" />
 
 <div class="box">
-    @using (Html.BeginForm("SaveDescription", "Activity", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Save", "Activity", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <label>Description:</label>
         <br />
-        <input type="text" name="description" id="description" />
-        <input type="hidden" name="id" id="id" value="@Model.Id" />
-        <input type="submit" name="submit" id="SaveDescription" value="SAVE DESCRIPTION" />
+        <input type="text" name="description" id="description" value="@Model.Description" />
 
+        <label>Journal:</label>
+        <br />
+        <textarea name="journal" id="journal" cols="40" rows="5" value="@Model.Journal"></textarea>
+        
+        <input type="hidden" name="id" id="id" value="@Model.Id" />
+        <input type="submit" name="submit" id="Save" value="SAVE" />
     }
 </div>

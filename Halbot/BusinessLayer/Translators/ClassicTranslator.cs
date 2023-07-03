@@ -30,6 +30,7 @@ namespace Halbot.BusinessLayer.Translators
                 halbotActivity.Description = record.Description;
                 halbotActivity.IsRace = record.IsRace;
                 halbotActivity.DataType = record.DataType;
+                halbotActivity.Journal = record.Gpx;    // yes, this is a hack
 
                 halbotActivity.Date = classicActivity.StartDatetime.DateTime;
                 halbotActivity.Distance = double.TryParse(classicActivity.DistanceTotal, NumberStyles.AllowDecimalPoint, NumberFormatInfo.InvariantInfo, out double distanceValue) ? distanceValue : 0;

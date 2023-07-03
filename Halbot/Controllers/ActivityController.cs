@@ -53,12 +53,13 @@ namespace Halbot.Controllers
             return RedirectToAction("Run", "Home", new { id = id });
         }
 
-        public IActionResult SaveDescription(string description, long id)
+        public IActionResult Save(string description, string journal, long id)
         {
             try
             {
                 var record = _dbcontext.ActivityRecords.Single(r => r.Id == id);
                 record.Description = description;
+                record.Gpx = journal;
                 _dbcontext.SaveChanges();
 
                 ActivityCache.InvalidateCache();

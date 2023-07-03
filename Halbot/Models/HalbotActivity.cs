@@ -24,6 +24,7 @@ namespace Halbot.Models
         public string Description { get; set; } // description of the activity
         public bool IsRace { get; set; }
         public ActivityDataType DataType { get; set; }
+        public string Journal { get; set; }
 
         //comparer for sorting (by date)
         public int CompareTo(HalbotActivity other)

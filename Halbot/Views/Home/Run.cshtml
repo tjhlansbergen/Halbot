@@ -9,7 +9,7 @@
 
 <div class="box">
 
-    <a asp-area="" asp-controller="Activity" asp-action="EditDescription" asp-route-id="@Model.Id"><button>EDIT DESCRIPTION</button></a>
+    <a asp-area="" asp-controller="Activity" asp-action="EditDescription" asp-route-id="@Model.Id"><button>EDIT</button></a>
     @if (Model.IsRace)
     {
         <a asp-area="" asp-controller="Activity" asp-action="ToggleRace" asp-route-id="@Model.Id"><button id="delete">REMOVE FROM RACES</button></a>
