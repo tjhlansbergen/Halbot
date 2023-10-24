@@ -96,6 +96,13 @@ input[type=color] {
 input[type=date] {
     width: 30%;
     float: left;
+    font-size: 32px;
+    margin: 8px 0;
+}
+
+input[type=number] {
+    font-size: 32px;
+    margin: 8px 0;
 }
 
 button {

@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System;
 using System.Globalization;
-using System.Diagnostics;
 
 namespace Halbot.BusinessLayer.Fetchers
 {

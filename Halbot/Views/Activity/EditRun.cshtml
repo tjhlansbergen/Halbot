@@ -17,6 +17,19 @@
         <label>Journal:</label>
         <br />
         <textarea name="journal" id="journal" cols="40" rows="5">@Model.Journal</textarea>
+
+        @if (Model.DataType == ActivityDataType.Garmin)
+        {
+            <label>Average heartrate:</label>
+            <br />
+            <input type="number" name="heartrate" id="heartrate" value="@Model.Heartrate" />
+
+            <br />
+
+            <label>Date:</label>
+            <br />
+            <input type="date" name="date" id="date" value="@Model.Date.ToString("yyyy-MM-dd")" />
+        }
         
         <input type="hidden" name="id" id="id" value="@Model.Id" />
         <input type="submit" name="submit" id="Save" value="SAVE" />

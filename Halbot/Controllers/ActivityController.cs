@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using Halbot.Data.Models;
+using Newtonsoft.Json;
 
 namespace Halbot.Controllers
 {
@@ -53,13 +55,22 @@ namespace Halbot.Controllers
             return RedirectToAction("Run", "Home", new { id = id });
         }
 
-        public IActionResult Save(string description, string journal, long id)
+        public IActionResult Save(string description, string journal, int heartrate, DateTime date, long id)
         {
             try
             {
                 var record = _dbcontext.ActivityRecords.Single(r => r.Id == id);
                 record.Description = description;
                 record.Gpx = journal;
+
+                if (record.DataType == ActivityDataType.Garmin)
+                {
+                    var activity = JsonConvert.DeserializeObject<GarminJson>(record.SerializedData);
+                    activity.SummaryDto.AverageHr = heartrate;
+                    activity.SummaryDto.StartTimeLocal = date;
+                    record.SerializedData = JsonConvert.SerializeObject(activity);
+                }
+
                 _dbcontext.SaveChanges();
 
                 ActivityCache.InvalidateCache();
