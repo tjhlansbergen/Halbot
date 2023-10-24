@@ -115,8 +115,14 @@ namespace Halbot.BusinessLayer.Fetchers
             var ogDesciption = splits.Single(s => s.Contains("og:description")).Split('"')[3];
 
             result.DistanceMeters = double.Parse(ogDesciption.Split('|').Single(s => s.Contains("Distance")).Split(' ')[1], CultureInfo.InvariantCulture) * 1000;
-            result.DurationSeconds = TimeSpan.Parse(ogDesciption.Split('|').Single(s => s.Contains("Time")).Split(' ')[2], CultureInfo.InvariantCulture).TotalSeconds;
             result.Climb = double.Parse(ogDesciption.Split('|').Single(s => s.Contains("Elevation")).Split(' ')[2], CultureInfo.InvariantCulture);
+
+            var duration = ogDesciption.Split('|').Single(s => s.Contains("Time")).Split(' ')[2].Trim();
+            if (duration.Split(':').Length == 2)
+            {
+                duration = "00:" + duration;
+            }
+            result.DurationSeconds = TimeSpan.Parse(duration, CultureInfo.InvariantCulture).TotalSeconds;
 
             result.SpeedMetersPerSecond = result.DistanceMeters / result.DurationSeconds;
 
