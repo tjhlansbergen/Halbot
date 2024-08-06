@@ -55,7 +55,7 @@ namespace Halbot.Controllers
             return RedirectToAction("Run", "Home", new { id = id });
         }
 
-        public IActionResult Save(string description, string journal, int heartrate, DateTime date, long id)
+        public IActionResult Save(string description, string journal, int heartrate, double maxElevation, DateTime date, long id)
         {
             try
             {
@@ -67,6 +67,7 @@ namespace Halbot.Controllers
                 {
                     var activity = JsonConvert.DeserializeObject<GarminJson>(record.SerializedData);
                     activity.SummaryDto.AverageHr = heartrate;
+                    activity.SummaryDto.MaxElevation = maxElevation;
                     activity.SummaryDto.StartTimeLocal = date;
                     record.SerializedData = JsonConvert.SerializeObject(activity);
                 }
