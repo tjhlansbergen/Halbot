@@ -28,7 +28,7 @@ namespace Halbot.Controllers
 
         public IActionResult Index()
         {
-            return View("Index", new IndexModel(ActivityCache.Get(_dbcontext)));
+            return View("Index", new IndexModel(ActivityCache.Get(_dbcontext), WorkoutCache.Get(_dbcontext)));
         }
 
         public IActionResult Charts()

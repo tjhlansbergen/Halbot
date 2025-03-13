@@ -61,27 +61,24 @@ namespace Halbot.Migrations
                     b.ToTable("LogRecords");
                 });
 
-            modelBuilder.Entity("Halbot.Data.Records.PlanRecord", b =>
+            modelBuilder.Entity("Halbot.Data.Records.WorkoutRecord", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Label")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("Completed")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Description")
+                    b.Property<int>("Minutes")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Notes")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("PlanRecords");
+                    b.ToTable("WorkoutRecords");
                 });
 #pragma warning restore 612, 618
         }

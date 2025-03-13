@@ -8,28 +8,56 @@
 
 <table class="alternating">
 
-    @foreach (var activity in Model.Activities.OrderByDescending(a => a.Date).ToList())
+    @foreach (var activity in Model.CombinedData.OrderByDescending(a => a.Date.Date).ThenByDescending(a => a.Type).ToList())
     {
-    <tr>
-        <td>
-            <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Distance / 1000:0.00} km")</a>
-        </td>
-        <td>
-            <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Pace} m/km")</a>
-        </td>
-        <td>
-            <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Climb:#}m")</a>
-        </td>
-        <td>
-            <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Date:D}")</a>
-        </td>
-        <td>
-            <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.Id">@($"{activity.Effort}")</a>
-        </td>
+        @if (activity.Type == WrappedType.HalbotActivity)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.HalbotActivity.Id">@($"{activity.HalbotActivity.Distance / 1000:0.00} km")</a>
+                </td>
+                <td>
+                    <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.HalbotActivity.Id">@($"{activity.HalbotActivity.Pace} m/km")</a>
+                </td>
+                <td>
+                    <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.HalbotActivity.Id">@($"{activity.HalbotActivity.Climb:#}m")</a>
+                </td>
+                <td>
+                    <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.HalbotActivity.Id">@($"{activity.HalbotActivity.Date:D}")</a>
+                </td>
+                <td>
+                    <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.HalbotActivity.Id">@($"{activity.HalbotActivity.Effort}")</a>
+                </td>
 
-        <td class=@Model.DistanceCategory(activity)>&nbsp;</td>
+                <td class=@Model.DistanceCategory(activity)>&nbsp;</td>
 
-    </tr>
+            </tr>
+        }
+
+        @if (activity.Type == WrappedType.Workout)
+        {
+            <tr>
+                <td>
+                    💪🏽
+                </td>
+                <td>
+                    <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.WorkoutRecord.Id">@($"{activity.WorkoutRecord.Minutes} mins")</a>
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.WorkoutRecord.Id">@($"{activity.WorkoutRecord.Date:D}")</a>
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+
+                <td class=@Model.DistanceCategory(activity)>&nbsp;</td>
+
+            </tr>
+        }
+    
     }
 
 </table>

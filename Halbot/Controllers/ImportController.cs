@@ -88,6 +88,22 @@ namespace Halbot.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult AddWorkout(int minutes, DateTime date)
+        {
+            _logger.Log(LogSeverityLevel.Info, $"Adding workout of {minutes} minutes");
+
+            var workout = new WorkoutRecord
+            {
+                Date = date,
+                Minutes = minutes
+            };
+
+            _dbcontext.Add(workout);
+            _dbcontext.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
+
         private void ActivityImport(List<ActivityRecord> records)
         {
             foreach (var incomingRecord in records)

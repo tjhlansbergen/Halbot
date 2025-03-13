@@ -217,6 +217,9 @@ td.long {
 td.xlong {
     background-color: #ed5314;
 }
+td.workout {
+    background-color: #cb51ed;
+}
 
 /* plan label colors */
 td.Easy {
