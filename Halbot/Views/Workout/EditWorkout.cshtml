@@ -1,0 +1,31 @@
+﻿@model Halbot.Data.Records.WorkoutRecord
+
+@{
+    ViewData["Title"] = "Edit Workout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="box">
+    @using (Html.BeginForm("Save", "Workout", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <label>Notes:</label>
+        <br />
+        <textarea name="notes" id="notes" cols="40" rows="5">@Model.Notes</textarea>
+
+        <label>Minutes:</label>
+        <br />
+        <input type="number" name="minutes" id="minutes" value=@Model.Minutes />
+        <br />
+            
+        <label>Date:</label>
+        <br />
+        <input type="date" name="date" id="date" value="@Model.Date.ToString("yyyy-MM-dd")" />
+        
+        
+        <input type="hidden" name="id" id="id" value="@Model.Id" />
+        <input type="submit" name="submit" id="Save" value="SAVE" />
+    }
+    
+    <br/>
+    <a asp-area="" asp-controller="Workout" asp-action="Delete" asp-route-id="@Model.Id"><button id="delete">DELETE</button></a>
+</div>

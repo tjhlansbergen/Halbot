@@ -38,19 +38,19 @@
         {
             <tr>
                 <td>
-                    💪🏽
+                    <a asp-controller="Workout" asp-action="Workout" asp-route-id="@activity.WorkoutRecord.Id">@($"{activity.WorkoutRecord.Minutes} mins")</a>
                 </td>
                 <td>
-                    <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.WorkoutRecord.Id">@($"{activity.WorkoutRecord.Minutes} mins")</a>
+                    <a asp-controller="Workout" asp-action="Workout" asp-route-id="@activity.WorkoutRecord.Id">Strength</a>
                 </td>
                 <td>
-                    &nbsp;
+                    <a asp-controller="Workout" asp-action="Workout" asp-route-id="@activity.WorkoutRecord.Id">-</a>
                 </td>
                 <td>
-                    <a asp-controller="Home" asp-action="Run" asp-route-id="@activity.WorkoutRecord.Id">@($"{activity.WorkoutRecord.Date:D}")</a>
+                    <a asp-controller="Workout" asp-action="Workout" asp-route-id="@activity.WorkoutRecord.Id">@($"{activity.WorkoutRecord.Date:D}")</a>
                 </td>
                 <td>
-                    &nbsp;
+                    <a asp-controller="Workout" asp-action="Workout" asp-route-id="@activity.WorkoutRecord.Id">-</a>
                 </td>
 
                 <td class=@Model.DistanceCategory(activity)>&nbsp;</td>
