@@ -34,7 +34,7 @@ namespace Halbot.Models
         {
             if (wrappedActivity.Type == WrappedType.Workout)
             {
-                return "workout";
+                return "workouts";
             }
 
             if (wrappedActivity.Type == WrappedType.HalbotActivity)

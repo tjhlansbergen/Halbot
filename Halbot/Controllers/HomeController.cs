@@ -33,7 +33,7 @@ namespace Halbot.Controllers
 
         public IActionResult Charts()
         {
-            return View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext)));
+            return View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext), WorkoutCache.Get(_dbcontext)));
         }
 
         public IActionResult Stats()
@@ -103,13 +103,13 @@ namespace Halbot.Controllers
 
             return index switch
             {
-                1 => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext))),
+                1 => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext), WorkoutCache.Get(_dbcontext))),
                 2 => View("ChartsMetrics", new ChartsMetricsModel(ActivityCache.Get(_dbcontext))),
                 3 => View("ChartsWorkload", new ChartsWorkloadModel(ActivityCache.Get(_dbcontext))),
                 4 => View("ChartsVolume", new ChartsVolumeModel(ActivityCache.Get(_dbcontext))),
                 5 => View("ChartsComparison", new ChartsComparisonModel(ActivityCache.Get(_dbcontext))),
                 6 => View("ChartsEddington", new ChartsEddingtonModel(ActivityCache.Get(_dbcontext))),
-                _ => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext)))
+                _ => View("ChartsProgression", new ChartsProgressionModel(ActivityCache.Get(_dbcontext), WorkoutCache.Get(_dbcontext)))
             };
         }
     }

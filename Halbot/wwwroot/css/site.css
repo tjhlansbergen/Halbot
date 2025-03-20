@@ -217,7 +217,7 @@ td.long {
 td.xlong {
     background-color: #ed5314;
 }
-td.workout {
+td.workouts {
     background-color: #ed93ec;
 }
 
@@ -251,6 +251,7 @@ td.Hills {
 .weekvolume,
 .weekpace,
 .weekclimb,
+.weekworkout,
 .planchart{
     padding: 0px;
     font-size: 16px;
@@ -288,5 +289,10 @@ div.plan {
     background-color: rebeccapurple;
 }
 
+div.workout {
+    background-color: #ed93ec;
+}
 
-
+td.workout {
+    color: #ed93ec;
+}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Halbot.Code.Charts;
+using Halbot.Data.Records;
 
 namespace Halbot.Models
 {
@@ -10,6 +11,8 @@ namespace Halbot.Models
     {
         //properties
         public List<HalbotActivity> Activities { get; }
+        public List<WorkoutRecord> Workouts { get; }
+
         public ColumnChart LastXVolume { get; }
         public ColumnChart LastXPace { get; }
         public ColumnChart LastXClimb { get; }
@@ -18,15 +21,18 @@ namespace Halbot.Models
         public ColumnChart LastWeekPace { get; }
         public ColumnChart LastWeekClimb { get; }
 
+        public ColumnChart LastWeekWorkout { get; }
+
         public ColumnChart LastMonthVolume { get; }
         public ColumnChart LastMonthPace { get; }
         public ColumnChart LastMonthClimb { get; }
 
         //constructor
-        public ChartsProgressionModel(List<HalbotActivity> activities)
+        public ChartsProgressionModel(List<HalbotActivity> activities, List<WorkoutRecord> workouts)
         {
             //initialize data
             Activities = activities;
+            Workouts = workouts;
 
             // init charts
             LastXVolume = GetLastXVolume(14);
@@ -36,6 +42,7 @@ namespace Halbot.Models
             LastWeekVolume = GetLastWeekVolume(14);
             LastWeekPace = GetLastWeekPace(14);
             LastWeekClimb = GetLastWeekClimb(14);
+            LastWeekWorkout = GetLastWeekWorkout(14);
 
             LastMonthVolume = GetLastMonthVolume(14);
             LastMonthPace = GetLastMonthPace(14);
@@ -150,6 +157,23 @@ namespace Halbot.Models
             }
 
             chart.AddDataSet(climb);
+            return chart;
+        }
+
+        private ColumnChart GetLastWeekWorkout(int x)
+        {
+            ColumnChart chart = new ColumnChart("weekworkout", 200);
+            var weeks = Workouts.OrderByDescending(w => w.Date).GroupBy(w => new { w.Date.Year, w.Week }).Take(x).Reverse().ToList();
+
+            ColumnChart.DataSet workout = new ColumnChart.DataSet("workout");
+
+            foreach (var week in weeks)
+            {
+                double sum = week.Sum(w => w.Minutes);
+                workout.Add(week.First().Week.ToString(), $"{sum:0}", sum);
+            }
+
+            chart.AddDataSet(workout);
             return chart;
         }
 
